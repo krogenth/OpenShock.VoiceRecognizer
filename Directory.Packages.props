@@ -1,0 +1,23 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Avalonia UI Packages -->
+    <PackageVersion Include="Avalonia" Version="11.1.1" />
+    <PackageVersion Include="Avalonia.Desktop" Version="11.1.1" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.1.1" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.1.1" />
+    <PackageVersion Include="Avalonia.ReactiveUI" Version="11.1.1" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.1.1" />
+		<PackageVersion Include="FluentAvaloniaUI" Version="2.1.0" />
+		
+    <!-- Audio Packages -->
+    <PackageVersion Include="NAudio" Version="2.2.1" />
+    <!-- Speech-To-Text Frameworks -->
+    <PackageVersion Include="Vosk" Version="0.3.38" />
+    <!-- Open Sound Control Framework -->
+    <PackageVersion Include="BuildSoft.OscCore" Version="1.2.1.1" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenShock.VoiceRecognizer", "OpenShock.VoiceRecognizer\OpenShock.VoiceRecognizer.csproj", "{F7E48742-EBA6-4A66-B171-46008FEB0266}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E4F11DEC-59DA-4C4D-A174-F7FFB36A2FF2}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		Directory.Packages.props = Directory.Packages.props
+		nuget.config = nuget.config
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenShock.VoiceRecognizer.Common", "OpenShock.VoiceRecognizer.Common\OpenShock.VoiceRecognizer.Common.csproj", "{398EC95F-C7B1-43B5-B9D9-0F779F19AAD7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenShock.VoiceRecognizer.Configuration", "OpenShock.VoiceRecognizer.Configuration\OpenShock.VoiceRecognizer.Configuration.csproj", "{64920BB3-6BF4-47D5-9005-E23DE8F01F27}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenShock.VoiceRecognizer.IO", "OpenShock.VoiceRecognizer.IO\OpenShock.VoiceRecognizer.IO.csproj", "{6B97B39A-12F7-4384-B61A-809766943A8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenShock.VoiceRecognizer.STT", "OpenShock.VoiceRecognizer.STT\OpenShock.VoiceRecognizer.STT.csproj", "{598261BC-2556-45D1-A9BC-FED163BE9CEA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenShock.VoiceRecognizer.Integrations", "OpenShock.VoiceRecognizer.Integrations\OpenShock.VoiceRecognizer.Integrations.csproj", "{0399A5FA-327C-4190-9DA4-69FD1C25AC14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7E48742-EBA6-4A66-B171-46008FEB0266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7E48742-EBA6-4A66-B171-46008FEB0266}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7E48742-EBA6-4A66-B171-46008FEB0266}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7E48742-EBA6-4A66-B171-46008FEB0266}.Release|Any CPU.Build.0 = Release|Any CPU
+		{398EC95F-C7B1-43B5-B9D9-0F779F19AAD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{398EC95F-C7B1-43B5-B9D9-0F779F19AAD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{398EC95F-C7B1-43B5-B9D9-0F779F19AAD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{398EC95F-C7B1-43B5-B9D9-0F779F19AAD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64920BB3-6BF4-47D5-9005-E23DE8F01F27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64920BB3-6BF4-47D5-9005-E23DE8F01F27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64920BB3-6BF4-47D5-9005-E23DE8F01F27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64920BB3-6BF4-47D5-9005-E23DE8F01F27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B97B39A-12F7-4384-B61A-809766943A8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B97B39A-12F7-4384-B61A-809766943A8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B97B39A-12F7-4384-B61A-809766943A8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B97B39A-12F7-4384-B61A-809766943A8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{598261BC-2556-45D1-A9BC-FED163BE9CEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{598261BC-2556-45D1-A9BC-FED163BE9CEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{598261BC-2556-45D1-A9BC-FED163BE9CEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{598261BC-2556-45D1-A9BC-FED163BE9CEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0399A5FA-327C-4190-9DA4-69FD1C25AC14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0399A5FA-327C-4190-9DA4-69FD1C25AC14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0399A5FA-327C-4190-9DA4-69FD1C25AC14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0399A5FA-327C-4190-9DA4-69FD1C25AC14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D02190A-1B01-44BE-B954-340D762FF64F}
+	EndGlobalSection
+EndGlobal

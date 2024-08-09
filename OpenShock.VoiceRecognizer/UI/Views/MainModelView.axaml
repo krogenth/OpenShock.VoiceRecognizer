@@ -1,0 +1,34 @@
+<UserControl x:Class="OpenShock.VoiceRecognizer.UI.Views.MainModelView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+			 xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels"
+			 xmlns:views="using:OpenShock.VoiceRecognizer.UI.Views"
+			 x:DataType="vm:MainModelViewModel">
+
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:MainModelViewModel/>
+	</Design.DataContext>
+
+	<StackPanel Orientation="Vertical"
+				  HorizontalAlignment="Stretch"
+				  VerticalAlignment="Stretch"
+				  Margin="10">
+		<StackPanel Orientation="Vertical"
+					Margin="10">
+			<TextBlock Text="Recognizer:" />
+			<StackPanel Orientation="Horizontal"
+						Spacing="10">
+				<Button Command="{Binding StartRecognizer}" IsEnabled="{Binding CanStartRecognizer}">Start</Button>
+				<Button Command="{Binding PauseRecognizer}" IsEnabled="{Binding CanPauseRecognizer}">Pause</Button>
+				<Button Command="{Binding StopRecognizer}" IsEnabled="{Binding CanStopRecognizer}">Stop</Button>
+			</StackPanel>
+		</StackPanel>
+		
+		<TextBlock Text="{Binding RecognizedText}" />
+	</StackPanel>
+</UserControl>

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuildSoft.OscCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenShock.VoiceRecognizer.Configuration\OpenShock.VoiceRecognizer.Configuration.csproj" />
+  </ItemGroup>
+
+</Project>

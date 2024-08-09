@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <BaseOutputPath>..\build</BaseOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<AvaloniaResource Include="UI\**\*.xaml">
+		<SubType>Designer</SubType>
+	</AvaloniaResource>
+	<AvaloniaResource Include="Assets\Icons\**" />
+	<AvaloniaResource Include="Assets\Fonts\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="Avalonia.Fonts.Inter" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" />
+    <PackageReference Include="Avalonia.ReactiveUI" />
+    <PackageReference Include="FluentAvaloniaUI" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenShock.VoiceRecognizer.Configuration\OpenShock.VoiceRecognizer.Configuration.csproj" />
+    <ProjectReference Include="..\OpenShock.VoiceRecognizer.Integrations\OpenShock.VoiceRecognizer.Integrations.csproj" />
+    <ProjectReference Include="..\OpenShock.VoiceRecognizer.STT\OpenShock.VoiceRecognizer.STT.csproj" />
+  </ItemGroup>
+</Project>

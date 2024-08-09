@@ -1,0 +1,39 @@
+<UserControl x:Class="OpenShock.VoiceRecognizer.SettingsZapView"
+			 xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels.Settings"
+             xmlns:views="using:OpenShock.VoiceRecognizer.UI.Views"
+             x:DataType="vm:SettingsZapViewModel">
+	<ScrollViewer Name="GeneralPage"
+					  HorizontalAlignment="Stretch"
+					  VerticalAlignment="Stretch"
+					  HorizontalScrollBarVisibility="Disabled"
+					  VerticalScrollBarVisibility="Auto">
+		<StackPanel Margin="10"
+					HorizontalAlignment="Stretch"
+					Orientation="Vertical"
+					Spacing="10">
+			<TextBlock Text="Recognized Words" />
+			<StackPanel Margin="10,0,0,0"
+						HorizontalAlignment="Stretch"
+						Orientation="Vertical"
+						Spacing="10">
+				<ListBox Name="WordList"
+						 MinHeight="230"
+						 ItemsSource="{Binding Words}">
+					<ListBox.Styles>
+						<Style Selector="ListBoxItem">
+							<Setter Property="Padding" Value="10" />
+						</Style>
+					</ListBox.Styles>
+				</ListBox>
+				<Grid HorziontalAlignment="Stretch">
+					
+				</Grid>
+			</StackPanel>
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

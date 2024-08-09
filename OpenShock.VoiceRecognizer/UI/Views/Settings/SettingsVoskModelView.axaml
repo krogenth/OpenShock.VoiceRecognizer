@@ -1,0 +1,44 @@
+<UserControl x:Class="OpenShock.VoiceRecognizer.UI.Views.Settings.SettingsVoskModelView"
+			 xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+			 xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels.Settings"
+			 x:DataType="vm:SettingsVoskModelViewModel">
+	<ScrollViewer Name="VoskModelPage"
+					HorizontalAlignment="Stretch"
+					VerticalAlignment="Stretch"
+					HorizontalScrollBarVisibility="Disabled"
+					VerticalScrollBarVisibility="Auto">
+		<Grid HorizontalAlignment="Stretch"
+			  Margin="20,10,10,10">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<TextBlock Grid.Column="0"
+					   Text="Model"
+					   Width="250"
+					   VerticalAlignment="Center" />
+			<TextBox Name="PathBox"
+					 Grid.Column="1"
+					 Margin="0"
+					 Text="{Binding SelectedModelDirectory}" />
+			<Button Name="ChangeModelButton"
+					Grid.Column="2"
+					MaxWidth="99"
+					Margin="10,0,0,0"
+					Click="ChangeModelDirectory_OnClick">
+				<TextBlock HorizontalAlignment="Center"
+						   Text="Change" />
+			</Button>
+		</Grid>
+	</ScrollViewer>
+</UserControl>

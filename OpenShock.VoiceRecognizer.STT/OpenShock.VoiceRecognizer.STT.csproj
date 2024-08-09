@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenShock.VoiceRecognizer.Common\OpenShock.VoiceRecognizer.Common.csproj" />
+    <ProjectReference Include="..\OpenShock.VoiceRecognizer.Configuration\OpenShock.VoiceRecognizer.Configuration.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NAudio" />
+    <PackageReference Include="Vosk" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,28 @@
+<UserControl x:Class="OpenShock.VoiceRecognizer.UI.Views.NumberInputView"
+			 xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+			 xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels"
+             x:CompileBindings="True"
+			 x:DataType="vm:NumberInputViewModel">
+	
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:NumberInputViewModel/>
+	</Design.DataContext>
+	
+	<StackPanel Margin="10,0,0,0"
+				  Orientation="Horizontal">
+		<TextBlock TextAlignment="Left"
+				   VerticalAlignment="Center"
+				   Text="{Binding Label}"
+				   Width="250" />
+		<NumericUpDown Value="{Binding Value}"
+					   Increment="1"
+					   Minimum="1"
+					   Maximum="100000" />
+	</StackPanel>
+</UserControl>

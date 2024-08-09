@@ -1,0 +1,67 @@
+<Window x:Class="OpenShock.VoiceRecognizer.UI.Windows.SettingsWindow"
+        Title="SettingsWindow"
+		xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+		xmlns:ui="using:FluentAvalonia.UI.Controls"
+        xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels.Settings"
+		xmlns:views="using:OpenShock.VoiceRecognizer.UI.Views.Settings"
+		x:DataType="vm:SettingsWindowViewModel"
+		Focusable="True"
+		Width="1100"
+		Height="768"
+		MinWidth="800"
+		MinHeight="480"
+		WindowStartupLocation="CenterOwner">
+	<Grid HorizontalAlignment="Stretch"
+		  VerticalAlignment="Stretch"
+		  MinWidth="600">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<ContentPresenter x:Name="ContentPresenter"
+						  Grid.Row="1"
+						  IsVisible="False"
+						  KeyboardNavigation.IsTabStop="False" />
+		<Grid Name="Pages"
+			  Grid.Row="2"
+			  IsVisible="False">
+			<views:SettingsGeneralView DataContext="{Binding GeneralVM}" Name="GeneralPage" />
+			<views:SettingsVoskModelView DataContext="{Binding VoskVM}" Name="VoskPage" />
+		</Grid>
+		<ui:NavigationView Grid.Row="1"
+						   IsSettingsVisible="False"
+						   Name="NavPanel"
+						   IsBackEnabled="False"
+						   PaneDisplayMode="Left"
+						   Margin="2,10,10,0"
+						   VerticalAlignment="Stretch"
+						   HorizontalAlignment="Stretch"
+						   OpenPaneLength="200">
+			<ui:NavigationView.MenuItems>
+				<ui:NavigationViewItem IsSelected="True"
+									   Content="General"
+									   Tag="GeneralPage"
+									   IconSource="Settings" />
+				<ui:NavigationViewItem Content="Vosk"
+									   Tag="VoskPage"
+									   IconSource="Light" />
+			</ui:NavigationView.MenuItems>
+		</ui:NavigationView>
+		<StackPanel Grid.Row="2"
+					Margin="10"
+					Spacing="10"
+					Orientation="Horizontal"
+					HorizontalAlignment="Right">
+			<Button HotKey="Enter"
+					Command="{Binding SaveSettings}">
+				Save
+			</Button>
+		</StackPanel>
+	</Grid>
+
+</Window>
