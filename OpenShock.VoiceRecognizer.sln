@@ -20,9 +20,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenShock.VoiceRecognizer.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenShock.VoiceRecognizer.IO", "OpenShock.VoiceRecognizer.IO\OpenShock.VoiceRecognizer.IO.csproj", "{6B97B39A-12F7-4384-B61A-809766943A8A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenShock.VoiceRecognizer.STT", "OpenShock.VoiceRecognizer.STT\OpenShock.VoiceRecognizer.STT.csproj", "{598261BC-2556-45D1-A9BC-FED163BE9CEA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenShock.VoiceRecognizer.Integrations", "OpenShock.VoiceRecognizer.Integrations\OpenShock.VoiceRecognizer.Integrations.csproj", "{0399A5FA-327C-4190-9DA4-69FD1C25AC14}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenShock.VoiceRecognizer.STT", "OpenShock.VoiceRecognizer.STT\OpenShock.VoiceRecognizer.STT.csproj", "{D8009C48-A5B5-49B5-AA6A-7C319908B2DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,14 +46,14 @@ Global
 		{6B97B39A-12F7-4384-B61A-809766943A8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B97B39A-12F7-4384-B61A-809766943A8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B97B39A-12F7-4384-B61A-809766943A8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{598261BC-2556-45D1-A9BC-FED163BE9CEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{598261BC-2556-45D1-A9BC-FED163BE9CEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{598261BC-2556-45D1-A9BC-FED163BE9CEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{598261BC-2556-45D1-A9BC-FED163BE9CEA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0399A5FA-327C-4190-9DA4-69FD1C25AC14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0399A5FA-327C-4190-9DA4-69FD1C25AC14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0399A5FA-327C-4190-9DA4-69FD1C25AC14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0399A5FA-327C-4190-9DA4-69FD1C25AC14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8009C48-A5B5-49B5-AA6A-7C319908B2DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8009C48-A5B5-49B5-AA6A-7C319908B2DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8009C48-A5B5-49B5-AA6A-7C319908B2DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8009C48-A5B5-49B5-AA6A-7C319908B2DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

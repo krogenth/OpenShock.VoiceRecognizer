@@ -1,10 +1,11 @@
-﻿using OpenShock.VoiceRecognizer.Common;
+﻿using System.Collections.ObjectModel;
+using OpenShock.VoiceRecognizer.Common;
 
 namespace OpenShock.VoiceRecognizer.Configuration;
 
 public class WordsConfigurationState
 {
-	public ReactiveObject<IEnumerable<string>> Words { get; private set; }
+	public ReactiveObject<ObservableCollection<string>> Words { get; private set; }
 
 	public WordsConfigurationState()
 	{

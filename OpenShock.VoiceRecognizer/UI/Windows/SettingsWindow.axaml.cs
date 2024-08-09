@@ -39,6 +39,7 @@ public partial class SettingsWindow : Window
 			{
 				"GeneralPage" => GeneralPage,
 				"VoskPage" => VoskPage,
+				"ZapPage" => ZapPage,
 				_ => throw new NotImplementedException(),
 			};
 		}

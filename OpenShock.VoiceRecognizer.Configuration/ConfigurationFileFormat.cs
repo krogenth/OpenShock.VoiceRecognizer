@@ -1,4 +1,5 @@
-﻿using OpenShock.VoiceRecognizer.IO.Json;
+﻿using System.Collections.ObjectModel;
+using OpenShock.VoiceRecognizer.IO.Json;
 
 namespace OpenShock.VoiceRecognizer.Configuration;
 
@@ -7,7 +8,7 @@ public class ConfigurationFileFormat
 	public string InputDeviceID { get; set; } = string.Empty;
 	public string VoskModelDirectory { get; set; } = string.Empty;
 	public int OscListenPort { get; set; } = 0;
-	public IEnumerable<string> Words { get; set; } = [];
+	public ObservableCollection<string> Words { get; set; } = [];
 
 	public ConfigurationFileFormat() { }
 
@@ -16,7 +17,7 @@ public class ConfigurationFileFormat
 		InputDeviceID = state.Audio.InputDeviceID.Value;
 		VoskModelDirectory = state.Vosk.ModelDirectory.Value;
 		OscListenPort = state.OSC.ListenPort.Value;
-		Words = state.Words.Words.Value; ;
+		Words = state.Words.Words.Value;
 	}
 
 	public static bool TryLoad(string filepath, out ConfigurationFileFormat? configurationFileFormat)

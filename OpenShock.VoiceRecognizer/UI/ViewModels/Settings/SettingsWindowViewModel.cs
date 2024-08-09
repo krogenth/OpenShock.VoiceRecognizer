@@ -9,11 +9,13 @@ public class SettingsWindowViewModel
 
 	public SettingsGeneralViewModel GeneralVM { get; }
 	public SettingsVoskModelViewModel VoskVM { get; }
+	public SettingsZapViewModel ZapVM { get; }
 
 	public SettingsWindowViewModel()
 	{
 		GeneralVM = new();
 		VoskVM = new();
+		ZapVM = new();
 	}
 
 	public void SaveSettings()

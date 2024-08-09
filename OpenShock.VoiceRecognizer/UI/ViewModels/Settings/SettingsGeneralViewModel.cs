@@ -40,6 +40,7 @@ public class SettingsGeneralViewModel : BaseViewModel
 				break;
 		}
 	}
+
 	private void ListenPortChanged(object? sender, NumberValueChangedEventArgs e) =>
 		ConfigurationState.Instance!.OSC.ListenPort.Value = e.Value;
 }

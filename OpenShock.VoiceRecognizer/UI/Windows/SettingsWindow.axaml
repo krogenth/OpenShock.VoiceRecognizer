@@ -32,6 +32,7 @@
 			  IsVisible="False">
 			<views:SettingsGeneralView DataContext="{Binding GeneralVM}" Name="GeneralPage" />
 			<views:SettingsVoskModelView DataContext="{Binding VoskVM}" Name="VoskPage" />
+			<views:SettingsZapView DataContext="{Binding ZapVM}" Name="ZapPage" />
 		</Grid>
 		<ui:NavigationView Grid.Row="1"
 						   IsSettingsVisible="False"
@@ -49,6 +50,9 @@
 									   IconSource="Settings" />
 				<ui:NavigationViewItem Content="Vosk"
 									   Tag="VoskPage"
+									   IconSource="Light" />
+				<ui:NavigationViewItem Content="Zap"
+									   Tag="ZapPage"
 									   IconSource="Light" />
 			</ui:NavigationView.MenuItems>
 		</ui:NavigationView>

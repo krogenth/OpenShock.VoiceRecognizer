@@ -1,4 +1,4 @@
-<UserControl x:Class="OpenShock.VoiceRecognizer.SettingsZapView"
+<UserControl x:Class="OpenShock.VoiceRecognizer.UI.Views.Settings.SettingsZapView"
 			 xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -23,15 +23,40 @@
 						Spacing="10">
 				<ListBox Name="WordList"
 						 MinHeight="230"
-						 ItemsSource="{Binding Words}">
+						 ItemsSource="{Binding Words}"
+						 SelectedIndex="{Binding SelectedWordIndex}">
 					<ListBox.Styles>
 						<Style Selector="ListBoxItem">
 							<Setter Property="Padding" Value="10" />
 						</Style>
 					</ListBox.Styles>
 				</ListBox>
-				<Grid HorziontalAlignment="Stretch">
-					
+				<Grid HorizontalAlignment="Stretch">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<TextBox Name="WordBox"
+							 Margin="0"
+							 VerticalAlignment="Stretch" />
+					<Button Name="AddButton"
+                            Grid.Column="1"
+                            MinWidth="90"
+                            Margin="10,0,0,0"
+							Click="WordAddClicked">
+						<TextBlock HorizontalAlignment="Center"
+								   Text="Add" />
+					</Button>
+					<Button Name="RemoveButton"
+                            Grid.Column="2"
+                            MinWidth="90"
+                            Margin="10,0,0,0"
+							Click="WordRemoveClicked"
+							IsEnabled="{Binding HasSelectedWord}">
+						<TextBlock HorizontalAlignment="Center"
+								   Text="Remove" />
+					</Button>
 				</Grid>
 			</StackPanel>
 		</StackPanel>
