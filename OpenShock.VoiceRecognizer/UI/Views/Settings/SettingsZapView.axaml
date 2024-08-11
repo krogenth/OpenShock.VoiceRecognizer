@@ -1,17 +1,18 @@
 <UserControl x:Class="OpenShock.VoiceRecognizer.UI.Views.Settings.SettingsZapView"
 			 xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels.Settings"
-             xmlns:views="using:OpenShock.VoiceRecognizer.UI.Views"
-             x:DataType="vm:SettingsZapViewModel">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d"
+			 xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels.Settings"
+			 xmlns:selectors="using:OpenShock.VoiceRecognizer.UI.Views.Enums"
+			 xmlns:views="using:OpenShock.VoiceRecognizer.UI.Views"
+			 x:DataType="vm:SettingsZapViewModel">
 	<ScrollViewer Name="GeneralPage"
-					  HorizontalAlignment="Stretch"
-					  VerticalAlignment="Stretch"
-					  HorizontalScrollBarVisibility="Disabled"
-					  VerticalScrollBarVisibility="Auto">
+				  HorizontalAlignment="Stretch"
+				  VerticalAlignment="Stretch"
+				  HorizontalScrollBarVisibility="Disabled"
+				  VerticalScrollBarVisibility="Auto">
 		<StackPanel Margin="10"
 					HorizontalAlignment="Stretch"
 					Orientation="Vertical"
@@ -19,44 +20,61 @@
 			<TextBlock Text="Recognized Words" />
 			<StackPanel Margin="10,0,0,0"
 						HorizontalAlignment="Stretch"
+						VerticalAlignment="Stretch"
 						Orientation="Vertical"
 						Spacing="10">
-				<ListBox Name="WordList"
-						 MinHeight="230"
-						 ItemsSource="{Binding Words}"
-						 SelectedIndex="{Binding SelectedWordIndex}">
-					<ListBox.Styles>
-						<Style Selector="ListBoxItem">
-							<Setter Property="Padding" Value="10" />
-						</Style>
-					</ListBox.Styles>
-				</ListBox>
+				<DataGrid ItemsSource="{Binding Words}"
+						  IsReadOnly="False"
+						  AutoGenerateColumns="True"
+						  CanUserReorderColumns="True"
+						  CanUserResizeColumns="True"
+						  CanUserSortColumns="False"
+						  GridLinesVisibility="All"
+						  HorizontalAlignment="Stretch"
+						  VerticalAlignment="Stretch"
+						  BorderThickness="1"
+						  BorderBrush="Gray"
+						  HeadersVisibility="Column"
+						  ColumnWidth="*"
+						  SelectedIndex="{Binding SelectedWordIndex}"
+						  SelectionMode="Single"
+						  >
+				</DataGrid>
 				<Grid HorizontalAlignment="Stretch">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
-					<TextBox Name="WordBox"
-							 Margin="0"
-							 VerticalAlignment="Stretch" />
-					<Button Name="AddButton"
-                            Grid.Column="1"
-                            MinWidth="90"
-                            Margin="10,0,0,0"
-							Click="WordAddClicked">
-						<TextBlock HorizontalAlignment="Center"
-								   Text="Add" />
-					</Button>
-					<Button Name="RemoveButton"
-                            Grid.Column="2"
-                            MinWidth="90"
-                            Margin="10,0,0,0"
-							Click="WordRemoveClicked"
-							IsEnabled="{Binding HasSelectedWord}">
-						<TextBlock HorizontalAlignment="Center"
-								   Text="Remove" />
-					</Button>
+					<StackPanel Grid.Column="0"
+								Spacing="20">
+						<StackPanel>
+							<views:StringInputView DataContext="{Binding TextInputVM}" />
+						</StackPanel>
+						<StackPanel>
+							<selectors:ShockTypeSelectorView DataContext="{Binding ShockTypeSelectorVM}" />
+						</StackPanel>
+						<StackPanel>
+							<views:NumberInputView DataContext="{Binding DelayInputVM}" />
+						</StackPanel>
+					</StackPanel>
+					<StackPanel Grid.Column="1"
+								Spacing="20">
+						<Button Name="RemoveButton"
+								MinWidth="90"
+								Margin="10,0,0,0"
+								Click="WordRemoveClicked"
+								IsEnabled="{Binding HasSelectedWord}">
+							<TextBlock HorizontalAlignment="Center"
+									   Text="Remove" />
+						</Button>
+						<Button Name="AddButton"
+								MinWidth="90"
+								Margin="10,0,0,0"
+								Click="WordAddClicked">
+							<TextBlock HorizontalAlignment="Center"
+									   Text="Add" />
+						</Button>
+					</StackPanel>
 				</Grid>
 			</StackPanel>
 		</StackPanel>

@@ -7,14 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenShock.VoiceRecognizer.Common\OpenShock.VoiceRecognizer.Common.csproj" />
     <ProjectReference Include="..\OpenShock.VoiceRecognizer.Configuration\OpenShock.VoiceRecognizer.Configuration.csproj" />
-    <ProjectReference Include="..\OpenShock.VoiceRecognizer.NGramRecognizer\OpenShock.VoiceRecognizer.NGramRecognizer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NAudio" />
-    <PackageReference Include="Vosk" />
   </ItemGroup>
 
 </Project>

@@ -16,13 +16,6 @@ public class AudioDeviceSelectorViewModel : BaseViewModel
 	public AudioDeviceType AudioDeviceType { get; private set; }
 	public ObservableCollection<MMDevice> Devices { get; private set; }
 
-	public AudioDeviceSelectorViewModel()
-	{
-		AudioDeviceType = AudioDeviceType.Input;
-		Devices = new ObservableCollection<MMDevice>();
-		SelectedDeviceIndex = 0;
-	}
-
 	public AudioDeviceSelectorViewModel(AudioDeviceType type, IEnumerable<MMDevice> devices, string defaultDeviceID)
 	{
 		AudioDeviceType = type;
@@ -38,14 +31,19 @@ public class AudioDeviceSelectorViewModel : BaseViewModel
 		get => _selectedDeviceIndex;
 		set
 		{
-			if (value < 0)
+			if (Devices.Count == 0)
 			{
-				value = 0;
+				return;
 			}
 
 			if (value >= Devices.Count)
 			{
 				value = Devices.Count - 1;
+			}
+
+			if (value < 0)
+			{
+				value = 0;
 			}
 
 			_selectedDeviceIndex = value;

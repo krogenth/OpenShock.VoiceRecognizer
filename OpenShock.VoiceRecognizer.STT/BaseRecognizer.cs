@@ -1,5 +1,6 @@
 ﻿using OpenShock.VoiceRecognizer.Configuration;
 using OpenShock.VoiceRecognizer.Common;
+using OpenShock.VoiceRecognizer.NGramRecognizer;
 
 namespace OpenShock.VoiceRecognizer.STT;
 
@@ -53,8 +54,28 @@ public abstract class BaseRecognizer : IDisposable
 	protected void OnStateChanged() =>
 		StateChanged?.Invoke(this, EventArgs.Empty);
 
-	protected void OnRecognizedSpeech(string text) =>
-		RecognizedSpeech?.Invoke(this, new RecognizedSpeechEventArgs(text));
+	protected void OnRecognizedSpeech(string text)
+	{
+		//RecognizedSpeech?.Invoke(this, new RecognizedSpeechEventArgs(text));
+		var recognized = NGramRecognizer.NGramRecognizer.RecognizedNGram(
+			text,
+			ConfigurationState.Instance!.Shock.Words.Value
+		);
+
+		if (recognized is not null)
+		{
+			switch (recognized.Type)
+			{
+				case Utility.Common.ShockType.Vibrate:
+					break;
+				case Utility.Common.ShockType.Shock:
+					break;
+				case Utility.Common.ShockType.VibrateThenShock:
+					break;
+
+			}
+		}
+	}
 
 	/// <summary>
 	/// Called when an error occurs within the Recognizer,

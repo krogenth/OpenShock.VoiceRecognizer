@@ -1,29 +1,27 @@
-<UserControl x:Class="OpenShock.VoiceRecognizer.UI.Views.NumberInputView"
+<UserControl x:Class="OpenShock.VoiceRecognizer.UI.Views.Enums.ShockCollarTypeSelectorView"
 			 xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-			 xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels"
-             x:CompileBindings="True"
-			 x:DataType="vm:NumberInputViewModel">
-	
+			 xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels.Enums"
+			 x:DataType="vm:ShockCollarTypeSelectorViewModel">
+
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-		<vm:NumberInputViewModel/>
+		<vm:ShockCollarTypeSelectorViewModel/>
 	</Design.DataContext>
-	
+
 	<StackPanel Margin="10,0,0,0"
-				  Orientation="Horizontal">
+				Orientation="Horizontal">
 		<TextBlock TextAlignment="Left"
 				   VerticalAlignment="Center"
-				   Text="{Binding Label}"
+				   Text="{Binding Title}"
 				   Width="250" />
-		<NumericUpDown Value="{Binding Value}"
-					   Width="400"
-					   Increment="1"
-					   Minimum="1"
-					   Maximum="100000" />
+		<ComboBox ItemsSource="{Binding Items}"
+				  SelectedIndex="{Binding SelectedValueIndex}"
+				  HorizontalAlignment="Center"
+				  Width="400" />
 	</StackPanel>
 </UserControl>
