@@ -50,10 +50,10 @@
 									   IconSource="Settings" />
 				<ui:NavigationViewItem Content="Vosk"
 									   Tag="VoskPage"
-									   IconSource="Light" />
+									   IconSource="Audio" />
 				<ui:NavigationViewItem Content="Zap"
 									   Tag="ZapPage"
-									   IconSource="Light" />
+									   IconSource="New" />
 			</ui:NavigationView.MenuItems>
 		</ui:NavigationView>
 		<StackPanel Grid.Row="2"
