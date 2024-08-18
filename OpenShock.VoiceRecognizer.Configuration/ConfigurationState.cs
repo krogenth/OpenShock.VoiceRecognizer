@@ -1,6 +1,4 @@
-﻿using OpenShock.VoiceRecognizer.Common.Enums;
-
-namespace OpenShock.VoiceRecognizer.Configuration;
+﻿namespace OpenShock.VoiceRecognizer.Configuration;
 
 public class ConfigurationState
 {
@@ -10,6 +8,8 @@ public class ConfigurationState
 	public VoskConfigurationState Vosk { get; }
 	public OSCConfigurationState OSC { get; }
 	public ShockConfigurationState Shock { get; }
+	public OpenShockConfigurationState OpenShock { get; }
+	public BrowserProxyConfigurationState BrowserProxy { get; }
 
 	public static ConfigurationState? Instance { get; private set; } = null;
 
@@ -19,6 +19,8 @@ public class ConfigurationState
 		Vosk = new();
 		OSC = new();
 		Shock = new();
+		OpenShock = new();
+		BrowserProxy = new();
 	}
 
 	public void LoadConfiguration()
@@ -41,6 +43,8 @@ public class ConfigurationState
 			Vosk.LoadFileConfiguration(configurationFileFormat!);
 			OSC.LoadFileConfiguration(configurationFileFormat!);
 			Shock.LoadFileConfiguration(configurationFileFormat!);
+			OpenShock.LoadFileConfiguration(configurationFileFormat!);
+			BrowserProxy.LoadFileConfiguration(configurationFileFormat!);
 		}
 	}
 
@@ -50,6 +54,8 @@ public class ConfigurationState
 		Vosk.LoadDefaultConfiguration();
 		OSC.LoadDefaultConfiguration();
 		Shock.LoadDefaultConfiguration();
+		OpenShock.LoadDefaultConfiguration();
+		BrowserProxy.LoadDefaultConfiguration();
 	}
 
 	public void SaveConfigurationStateToFile() =>

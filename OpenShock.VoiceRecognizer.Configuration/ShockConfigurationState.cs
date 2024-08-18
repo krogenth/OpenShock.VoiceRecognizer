@@ -24,8 +24,8 @@ public class ShockConfigurationState
 
 	public void LoadDefaultConfiguration()
 	{
-		CollarType = new(ShockCollarType.OpenShock);
-		Words = new([]);
+		CollarType.Value = ShockCollarType.OpenShock;
+		Words.Value = [];
 	}
 }
 
@@ -33,5 +33,6 @@ public class WordRecognition
 {
 	public string Word { get; set; } = string.Empty;
 	public ShockType Type { get; set; }
-	public float Delay { get; set; }
+	public float MinDelay { get; set; }
+	public float MaxDelay { get; set; }
 }

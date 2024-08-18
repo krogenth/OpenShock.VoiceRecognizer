@@ -15,5 +15,5 @@ public class OSCConfigurationState
 		ListenPort.Value = configurationFileFormat.OscListenPort;
 
 	public void LoadDefaultConfiguration() =>
-		ListenPort = new(9005);
+		ListenPort.Value = 9005;
 }

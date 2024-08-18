@@ -1,6 +1,7 @@
 ﻿using OpenShock.VoiceRecognizer.Common.Audio;
 using OpenShock.VoiceRecognizer.Common.Enums;
 using OpenShock.VoiceRecognizer.Configuration;
+using OpenShock.VoiceRecognizer.UI.ViewModels.Enums;
 
 namespace OpenShock.VoiceRecognizer.UI.ViewModels.Settings;
 
@@ -8,6 +9,7 @@ public class SettingsGeneralViewModel : BaseViewModel
 {
 	public AudioDeviceSelectorViewModel InputDeviceSelectorVM { get; }
 	public NumberInputViewModel ListenPortSelectorVM { get; }
+	public ShockCollarTypeSelectorViewModel ShockCollarTypeSelectorVM { get; }
 
 	public SettingsGeneralViewModel()
 	{
@@ -22,6 +24,11 @@ public class SettingsGeneralViewModel : BaseViewModel
 			ConfigurationState.Instance!.OSC.ListenPort.Value
 		);
 
+		ShockCollarTypeSelectorVM = new(
+			"Shock Collar Type",
+			ConfigurationState.Instance!.Shock.CollarType.Value
+		);
+
 		AttachEventHandlers();
 	}
 
@@ -29,6 +36,7 @@ public class SettingsGeneralViewModel : BaseViewModel
 	{
 		InputDeviceSelectorVM.DeviceChanged += AudioDeviceChanged;
 		ListenPortSelectorVM.NumberValueChanged += ListenPortChanged;
+		ShockCollarTypeSelectorVM.EnumChanged += ShockCollarTypeChanged;
 	}
 
 	private void AudioDeviceChanged(object? sender, AudioDeviceChangedEventArgs e)
@@ -43,4 +51,7 @@ public class SettingsGeneralViewModel : BaseViewModel
 
 	private void ListenPortChanged(object? sender, NumberValueChangedEventArgs e) =>
 		ConfigurationState.Instance!.OSC.ListenPort.Value = e.Value;
+
+	private void ShockCollarTypeChanged(object? sender, EnumChangedEventArgs<ShockCollarType> e) =>
+		ConfigurationState.Instance!.Shock.CollarType.Value = e.Value;
 }

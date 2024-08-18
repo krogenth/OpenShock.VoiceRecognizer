@@ -40,6 +40,7 @@ public partial class SettingsWindow : Window
 				"GeneralPage" => GeneralPage,
 				"VoskPage" => VoskPage,
 				"ZapPage" => ZapPage,
+				"OpenShockPage" => OpenShockPage,
 				_ => throw new NotImplementedException(),
 			};
 		}

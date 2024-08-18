@@ -15,5 +15,5 @@ public class VoskConfigurationState
 		ModelDirectory.Value = configurationFileFormat.VoskModelDirectory;
 
 	public void LoadDefaultConfiguration() =>
-		ModelDirectory = new(AppDomain.CurrentDomain.BaseDirectory);
+		ModelDirectory.Value = AppDomain.CurrentDomain.BaseDirectory;
 }

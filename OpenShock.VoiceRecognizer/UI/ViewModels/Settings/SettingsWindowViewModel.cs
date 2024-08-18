@@ -10,12 +10,14 @@ public class SettingsWindowViewModel
 	public SettingsGeneralViewModel GeneralVM { get; }
 	public SettingsVoskModelViewModel VoskVM { get; }
 	public SettingsZapViewModel ZapVM { get; }
+	public SettingsOpenShockViewModel OpenShockVM { get; }
 
 	public SettingsWindowViewModel()
 	{
 		GeneralVM = new();
 		VoskVM = new();
 		ZapVM = new();
+		OpenShockVM = new();
 	}
 
 	public void SaveSettings()

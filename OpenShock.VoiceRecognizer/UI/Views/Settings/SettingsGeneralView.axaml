@@ -6,6 +6,7 @@
              mc:Ignorable="d"
              xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels.Settings"
              xmlns:views="using:OpenShock.VoiceRecognizer.UI.Views"
+			 xmlns:enumViews="using:OpenShock.VoiceRecognizer.UI.Views.Enums"
              x:DataType="vm:SettingsGeneralViewModel">
 	<ScrollViewer Name="GeneralPage"
 					HorizontalAlignment="Stretch"
@@ -18,6 +19,7 @@
 					Spacing="10">
 			<views:AudioDeviceSelectorView DataContext="{Binding InputDeviceSelectorVM}"/>
 			<views:NumberInputView DataContext="{Binding ListenPortSelectorVM}" />
+			<enumViews:ShockCollarTypeSelectorView DataContext="{Binding ShockCollarTypeSelectorVM}" />
 		</StackPanel>
 	</ScrollViewer>
 </UserControl>

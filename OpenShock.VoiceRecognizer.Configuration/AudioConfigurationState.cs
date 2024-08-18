@@ -16,5 +16,5 @@ public class AudioConfigurationState
 		InputDeviceID.Value = configurationFileFormat.InputDeviceID;
 
 	public void LoadDefaultConfiguration() =>
-		InputDeviceID = new(AudioDevices.GetInputAudioDevices().First().ID);
+		InputDeviceID.Value = AudioDevices.GetInputAudioDevices().First().ID;
 }

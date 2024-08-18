@@ -54,7 +54,10 @@
 							<selectors:ShockTypeSelectorView DataContext="{Binding ShockTypeSelectorVM}" />
 						</StackPanel>
 						<StackPanel>
-							<views:NumberInputView DataContext="{Binding DelayInputVM}" />
+							<views:NumberInputView DataContext="{Binding MinDelayInputVM}" />
+						</StackPanel>
+						<StackPanel>
+							<views:NumberInputView DataContext="{Binding MaxDelayInputVM}" />
 						</StackPanel>
 					</StackPanel>
 					<StackPanel Grid.Column="1"
