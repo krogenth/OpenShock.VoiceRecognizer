@@ -62,7 +62,7 @@ public abstract class BaseRecognizer : IDisposable
 
 	protected void OnRecognizedSpeech(string text)
 	{
-		//RecognizedSpeech?.Invoke(this, new RecognizedSpeechEventArgs(text));
+		RecognizedSpeech?.Invoke(this, new RecognizedSpeechEventArgs(text));
 		var recognized = NGramRecognizer.NGramRecognizer.RecognizedNGram(
 			text,
 			ConfigurationState.Instance!.Shock.Words.Value
