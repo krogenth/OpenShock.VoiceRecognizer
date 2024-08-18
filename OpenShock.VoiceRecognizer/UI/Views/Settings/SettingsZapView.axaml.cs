@@ -18,7 +18,8 @@ public partial class SettingsZapView : UserControl
 		var words = (DataContext as SettingsZapViewModel)!.Words;
 		var word = (DataContext as SettingsZapViewModel)!.InputText;
 		var shockType = (DataContext as SettingsZapViewModel)!.ShockType;
-		var delay = (DataContext as SettingsZapViewModel)!.Delay;
+		var minDelay = (DataContext as SettingsZapViewModel)!.MinDelay;
+		var maxDelay = (DataContext as SettingsZapViewModel)!.MaxDelay;
 
 		if (!string.IsNullOrWhiteSpace(word) && !words.Any(w => w.Word.Contains(word)))
 		{
@@ -27,7 +28,8 @@ public partial class SettingsZapView : UserControl
 			{
 				Word = word,
 				Type = shockType,
-				Delay = delay,
+				MinDelay = minDelay,
+				MaxDelay = maxDelay,
 			});
 			ConfigurationState.Instance!.Shock.Words.Value = words;
 		}

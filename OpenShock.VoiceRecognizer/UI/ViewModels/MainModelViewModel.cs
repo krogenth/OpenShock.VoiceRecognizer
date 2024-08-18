@@ -32,7 +32,7 @@ public class MainModelViewModel : BaseViewModel
 
 	private void SelectRecognizer()
 	{
-		BaseSpeechRecognizer = new VoskSpeechRecognizer();
+		BaseSpeechRecognizer = new VoskSpeechRecognizer(_oscServer);
 		BaseSpeechRecognizer.RecognizedSpeech += OnRecognizedSpeech;
 		BaseSpeechRecognizer.StateChanged += OnRecognizerStateChanged;
 	}

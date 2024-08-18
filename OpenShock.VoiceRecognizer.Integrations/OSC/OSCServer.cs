@@ -10,6 +10,7 @@ public class OSCServer
 	private OscServer? _server = null;
 	public event EventHandler<RecognizerToggleEventArgs>? ToggleRecognizer;
 	public event EventHandler<RecognizerSetEventArgs>? SetRecognizer;
+	public event EventHandler<OscMessageEventArgs>? OscMessage;
 
 	public OSCServer()
 	{
@@ -29,6 +30,9 @@ public class OSCServer
 	{
 		_server!.TryAddMethod("/recognizer/toggle", OnChangeRecognizerState);
 		_server!.TryAddMethod("/recognizer/set", OnSetRecognizerState);
+		_server!.AddMonitorCallback((BlobString endpoint, OscMessageValues values) =>
+			OscMessage?.Invoke(this, new OscMessageEventArgs(endpoint.ToString(), values))
+		);
 	}
 
 	private void OnListenPortChanged(object? sender, ValueChangedEventArgs<int> e) =>
@@ -52,4 +56,10 @@ public class RecognizerToggleEventArgs : EventArgs { }
 public class RecognizerSetEventArgs(bool state) : EventArgs
 {
 	public bool State { get; private set; } = state;
+}
+
+public class OscMessageEventArgs(string endpoint, OscMessageValues values) : EventArgs
+{
+	public string Endpoint { get; private set; } = endpoint;
+	public OscMessageValues Values { get; private set; } = values;
 }

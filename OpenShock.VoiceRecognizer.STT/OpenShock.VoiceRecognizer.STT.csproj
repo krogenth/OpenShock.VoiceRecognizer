@@ -9,7 +9,9 @@
   <ItemGroup>
     <ProjectReference Include="..\OpenShock.VoiceRecognizer.Common\OpenShock.VoiceRecognizer.Common.csproj" />
     <ProjectReference Include="..\OpenShock.VoiceRecognizer.Configuration\OpenShock.VoiceRecognizer.Configuration.csproj" />
+    <ProjectReference Include="..\OpenShock.VoiceRecognizer.Integrations\OpenShock.VoiceRecognizer.Integrations.csproj" />
     <ProjectReference Include="..\OpenShock.VoiceRecognizer.NGramRecognizer\OpenShock.VoiceRecognizer.NGramRecognizer.csproj" />
+    <ProjectReference Include="..\OpenShock.VoiceRecognizer.Shockers\OpenShock.VoiceRecognizer.Shockers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

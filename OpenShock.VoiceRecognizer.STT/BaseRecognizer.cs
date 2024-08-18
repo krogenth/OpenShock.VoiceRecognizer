@@ -1,6 +1,7 @@
 ﻿using OpenShock.VoiceRecognizer.Configuration;
 using OpenShock.VoiceRecognizer.Common;
-using OpenShock.VoiceRecognizer.NGramRecognizer;
+using OpenShock.VoiceRecognizer.Integrations.OSC;
+using OpenShock.VoiceRecognizer.Shockers;
 
 namespace OpenShock.VoiceRecognizer.STT;
 
@@ -9,6 +10,9 @@ public abstract class BaseRecognizer : IDisposable
 	public event EventHandler<ErrorEventArgs>? ErrorTriggered;
 	public event EventHandler<EventArgs>? StateChanged;
 	public event EventHandler<RecognizedSpeechEventArgs>? RecognizedSpeech;
+
+	protected OSCServer _server;
+	protected OpenShockShocker _shocker;
 
 	/// <summary>
 	/// Specifies if the Recognizer is currently listening
@@ -22,8 +26,10 @@ public abstract class BaseRecognizer : IDisposable
 	/// </summary>
 	public bool Stopped { get; protected set; }
 
-	public BaseRecognizer()
+	public BaseRecognizer(OSCServer server)
 	{
+		_shocker = new OpenShockShocker(server);
+		_server = server;
 		Paused = false;
 		Stopped = true;
 		ConfigurationState.Instance!.Audio.InputDeviceID.ValueChanged += DeviceChanged;
@@ -64,7 +70,8 @@ public abstract class BaseRecognizer : IDisposable
 
 		if (recognized is not null)
 		{
-			switch (recognized.Type)
+			_shocker.HandleRecognizedWord(recognized);
+			/*switch (recognized.Type)
 			{
 				case Utility.Common.ShockType.Vibrate:
 					break;
@@ -72,8 +79,7 @@ public abstract class BaseRecognizer : IDisposable
 					break;
 				case Utility.Common.ShockType.VibrateThenShock:
 					break;
-
-			}
+			}*/
 		}
 	}
 
@@ -98,12 +104,7 @@ public abstract class BaseRecognizer : IDisposable
 	public abstract void Dispose();
 }
 
-public class RecognizedSpeechEventArgs
+public class RecognizedSpeechEventArgs(string text)
 {
-	public string Text { get; }
-
-	public RecognizedSpeechEventArgs(string text)
-	{
-		Text = text;
-	}
+	public string Text { get; } = text;
 }

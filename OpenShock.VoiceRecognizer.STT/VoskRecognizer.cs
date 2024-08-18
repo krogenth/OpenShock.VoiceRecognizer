@@ -5,6 +5,7 @@ using NAudio.Wave;
 using OpenShock.VoiceRecognizer.Configuration;
 using OpenShock.VoiceRecognizer.Common.Audio;
 using Vosk;
+using OpenShock.VoiceRecognizer.Integrations.OSC;
 
 namespace OpenShock.VoiceRecognizer.STT;
 
@@ -14,7 +15,7 @@ public class VoskSpeechRecognizer : BaseRecognizer
 	private VoskRecognizer? _recognizer;
 	private WasapiCapture? _capture;
 
-	public VoskSpeechRecognizer() : base()
+	public VoskSpeechRecognizer(OSCServer server) : base(server)
 	{
 		AttachEventHandlers();
 	}

@@ -33,6 +33,7 @@
 			<views:SettingsGeneralView DataContext="{Binding GeneralVM}" Name="GeneralPage" />
 			<views:SettingsVoskModelView DataContext="{Binding VoskVM}" Name="VoskPage" />
 			<views:SettingsZapView DataContext="{Binding ZapVM}" Name="ZapPage" />
+			<views:SettingsOpenShockView DataContext="{Binding OpenShockVM}" Name="OpenShockPage" />
 		</Grid>
 		<ui:NavigationView Grid.Row="1"
 						   IsSettingsVisible="False"
@@ -53,6 +54,9 @@
 									   IconSource="Audio" />
 				<ui:NavigationViewItem Content="Zap"
 									   Tag="ZapPage"
+									   IconSource="New" />
+				<ui:NavigationViewItem Content="OpenShock"
+									   Tag="OpenShockPage"
 									   IconSource="New" />
 			</ui:NavigationView.MenuItems>
 		</ui:NavigationView>

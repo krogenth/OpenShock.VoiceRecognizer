@@ -7,13 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildSoft.OscCore" />
-    <PackageReference Include="OpenShock.SDK.CSharp" />
-    <PackageReference Include="OpenShock.SDK.CSharp.Hub" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\OpenShock.VoiceRecognizer.Common\OpenShock.VoiceRecognizer.Common.csproj" />
     <ProjectReference Include="..\OpenShock.VoiceRecognizer.Configuration\OpenShock.VoiceRecognizer.Configuration.csproj" />
+    <ProjectReference Include="..\OpenShock.VoiceRecognizer.Integrations\OpenShock.VoiceRecognizer.Integrations.csproj" />
   </ItemGroup>
 
 </Project>

@@ -20,5 +20,8 @@
     <PackageVersion Include="Vosk" Version="0.3.38" />
     <!-- Open Sound Control Framework -->
     <PackageVersion Include="BuildSoft.OscCore" Version="1.2.1.1" />
+		<!-- OpenShock API -->
+		<PackageVersion Include="OpenShock.SDK.CSharp" Version="0.0.25" />
+		<PackageVersion Include="OpenShock.SDK.CSharp.Hub" Version="0.0.24" />
   </ItemGroup>
 </Project>
