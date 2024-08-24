@@ -1,4 +1,5 @@
 ﻿using OpenShock.VoiceRecognizer.Configuration;
+using OpenShock.VoiceRecognizer.Integrations.OpenShock;
 using OpenShock.VoiceRecognizer.Integrations.OSC;
 using OpenShock.VoiceRecognizer.Utility.Common;
 
@@ -6,46 +7,31 @@ namespace OpenShock.VoiceRecognizer.Shockers;
 
 public class OpenShockShocker : BaseShocker
 {
-	// goes 1 to 10 - anna
-	private float _externalSetIntensity = 0.0f;
-	private readonly OSCClient _client;
-
-	public OpenShockShocker(OSCServer server) : base(server)
+	public OpenShockShocker()
 	{
-		_client = new();
-		AttachHandlers();
-	}
-
-	private void AttachHandlers() =>
-		_server.OscMessage += OnOscMessageReceived;
-
-	protected override void OnOscMessageReceived(object? sender, OscMessageEventArgs e)
-	{
-		if (e.Endpoint.Equals(ConfigurationState.Instance!.OpenShock.ExternalListenSetIntensityEndpoint.Value))
-		{
-			try
-			{
-				_externalSetIntensity = e.Values.ReadFloatElement(0);
-			}
-			catch (Exception) { }
-		}
 	}
 
 	public override async void HandleRecognizedWord(WordRecognition recognized)
 	{
+		var deviceID = ConfigurationState.Instance!.OpenShock.ShockerID.Value;
+		var initialDelay = (new Random().NextSingle() * (recognized.MaxInitialDelay - recognized.MinInitialDelay)) + recognized.MinInitialDelay;
+		await TaskDelay(initialDelay).ConfigureAwait(false);
+
+		var duration = (ushort)((new Random().Next() * (recognized.MaxDuration - recognized.MinDuration)) + recognized.MinDuration);
+
 		switch (recognized.Type)
 		{
 			case ShockType.Vibrate:
-				HandleVibrate();
+				await HandleVibrate(deviceID, duration, recognized.Intensity).ConfigureAwait(false);
 				break;
 			case ShockType.Shock:
-				HandleShock();
+				await HandleShock(deviceID, duration, recognized.Intensity).ConfigureAwait(false);
 				break;
 			case ShockType.VibrateThenShock:
-				HandleVibrate();
+				await HandleVibrate(deviceID, duration, recognized.Intensity).ConfigureAwait(false);
 				var delay = (new Random().NextSingle() * (recognized.MaxDelay - recognized.MinDelay)) + recognized.MinDelay;
-				await TaskDelay(delay).ConfigureAwait(false);
-				HandleShock();
+				await TaskDelay(delay);
+				await HandleShock(deviceID, duration, recognized.Intensity).ConfigureAwait(false);
 				break;
 		}
 	}
@@ -56,20 +42,14 @@ public class OpenShockShocker : BaseShocker
 		await Task.Delay(ms).ConfigureAwait(false);
 	}
 
-	protected override void HandleShock()
+	protected override async Task HandleShock(Guid deviceID, ushort duration, byte intensity)
 	{
-		_client.Client?.Send(
-			$"{ConfigurationState.Instance!.OpenShock.ExternalSendStartShockEndpoint.Value}",
-			true
-		);
+		await OpenShockAPI.Instance.SendShock(deviceID, duration, intensity);
 	}
 
-	protected override void HandleVibrate()
+	protected override async Task HandleVibrate(Guid deviceID, ushort duration, byte intensity)
 	{
-		_client.Client?.Send(
-			$"{ConfigurationState.Instance!.OpenShock.ExternalSendStartVibrationEndpoint.Value}",
-			true
-		);
+		await OpenShockAPI.Instance.SendVibrate(deviceID, duration, intensity);
 	}
 
 	public override void Dispose()

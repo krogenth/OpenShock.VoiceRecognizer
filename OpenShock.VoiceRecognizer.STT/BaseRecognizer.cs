@@ -2,6 +2,7 @@
 using OpenShock.VoiceRecognizer.Common;
 using OpenShock.VoiceRecognizer.Integrations.OSC;
 using OpenShock.VoiceRecognizer.Shockers;
+using OpenShock.VoiceRecognizer.NGramRecognizer;
 
 namespace OpenShock.VoiceRecognizer.STT;
 
@@ -10,8 +11,8 @@ public abstract class BaseRecognizer : IDisposable
 	public event EventHandler<ErrorEventArgs>? ErrorTriggered;
 	public event EventHandler<EventArgs>? StateChanged;
 	public event EventHandler<RecognizedSpeechEventArgs>? RecognizedSpeech;
+	public event EventHandler<WasRecognizedEventArgs>? NGramRecognized;
 
-	protected OSCServer _server;
 	protected OpenShockShocker _shocker;
 
 	/// <summary>
@@ -26,10 +27,9 @@ public abstract class BaseRecognizer : IDisposable
 	/// </summary>
 	public bool Stopped { get; protected set; }
 
-	public BaseRecognizer(OSCServer server)
+	public BaseRecognizer()
 	{
-		_shocker = new OpenShockShocker(server);
-		_server = server;
+		_shocker = new OpenShockShocker();
 		Paused = false;
 		Stopped = true;
 		ConfigurationState.Instance!.Audio.InputDeviceID.ValueChanged += DeviceChanged;
@@ -67,6 +67,8 @@ public abstract class BaseRecognizer : IDisposable
 			text,
 			ConfigurationState.Instance!.Shock.Words.Value
 		);
+
+		NGramRecognized?.Invoke(this, new WasRecognizedEventArgs(recognized is not null));
 
 		if (recognized is not null)
 		{
@@ -107,4 +109,9 @@ public abstract class BaseRecognizer : IDisposable
 public class RecognizedSpeechEventArgs(string text)
 {
 	public string Text { get; } = text;
+}
+
+public class WasRecognizedEventArgs(bool value)
+{
+	public bool Value { get; } = value;
 }

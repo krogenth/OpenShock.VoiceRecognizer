@@ -33,6 +33,11 @@ public class WordRecognition
 {
 	public string Word { get; set; } = string.Empty;
 	public ShockType Type { get; set; }
+	public float MinInitialDelay { get; set; }
+	public float MaxInitialDelay { get; set; }
 	public float MinDelay { get; set; }
 	public float MaxDelay { get; set; }
+	public byte Intensity { get; set; }
+	public ushort MinDuration { get; set; }
+	public ushort MaxDuration { get; set; }
 }

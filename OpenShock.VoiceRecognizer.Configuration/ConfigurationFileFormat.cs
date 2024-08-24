@@ -11,13 +11,9 @@ public class ConfigurationFileFormat
 	public int OscListenPort { get; set; } = 0;
 	public ShockCollarType CollarType { get; set; } = ShockCollarType.OpenShock;
 	public ObservableCollection<WordRecognition> Words { get; set; } = [];
-	/*public string OpenShockAPIKey { get; set; } = string.Empty;
-	public string OpenShockGroupName { get; set; } = string.Empty;*/
-	public string OpenShockSendHost {  get; set; } = string.Empty;
-	public int OpenShockSendPort { get; set; } = 0;
-	public string OpenShockOscListenIntensityEndpoint { get; set; } = string.Empty;
-	public string OpenShockOscSendShockEndpoint { get; set; } = string.Empty;
-	public string OpenShockOscSendVibrateEndpoint { get; set; } = string.Empty;
+	public string OpenShockAPIKey { get; set; } = string.Empty;
+	public Guid OpenShockDeviceID { get; set;} = Guid.Empty;
+	public Guid OpenShockShockerID { get; set; } = Guid.Empty;
 	public BrowserProxyType BrowserProxyType { get; set; } = BrowserProxyType.Chrome;
 	public int BrowserProxyPort { get; set; } = 0;
 
@@ -30,13 +26,9 @@ public class ConfigurationFileFormat
 		OscListenPort = state.OSC.ListenPort.Value;
 		CollarType = state.Shock.CollarType.Value;
 		Words = state.Shock.Words.Value;
-		/*OpenShockAPIKey = state.OpenShock.APIKey.Value;
-		OpenShockGroupName = state.OpenShock.GroupName.Value;*/
-		OpenShockSendHost = state.OpenShock.SendHost.Value;
-		OpenShockSendPort = state.OpenShock.SendPort.Value;
-		OpenShockOscListenIntensityEndpoint = state.OpenShock.ExternalListenSetIntensityEndpoint;
-		OpenShockOscSendShockEndpoint = state.OpenShock.ExternalSendStartShockEndpoint;
-		OpenShockOscSendVibrateEndpoint = state.OpenShock.ExternalSendStartShockEndpoint;
+		OpenShockAPIKey = state.OpenShock.APIKey.Value;
+		OpenShockDeviceID = state.OpenShock.DeviceID.Value;
+		OpenShockShockerID = state.OpenShock.ShockerID.Value;
 		BrowserProxyType = state.BrowserProxy.Proxy.Value;
 		BrowserProxyPort = state.BrowserProxy.ProxyPort.Value;
 	}

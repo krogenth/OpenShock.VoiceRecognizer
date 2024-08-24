@@ -47,18 +47,15 @@
 					</Grid.ColumnDefinitions>
 					<StackPanel Grid.Column="0"
 								Spacing="20">
-						<StackPanel>
 							<views:StringInputView DataContext="{Binding TextInputVM}" />
-						</StackPanel>
-						<StackPanel>
 							<selectors:ShockTypeSelectorView DataContext="{Binding ShockTypeSelectorVM}" />
-						</StackPanel>
-						<StackPanel>
+							<views:NumberInputView DataContext="{Binding MinInitialDelayInputVM}" />
+							<views:NumberInputView DataContext="{Binding MaxInitialDelayInputVM}" />
 							<views:NumberInputView DataContext="{Binding MinDelayInputVM}" />
-						</StackPanel>
-						<StackPanel>
 							<views:NumberInputView DataContext="{Binding MaxDelayInputVM}" />
-						</StackPanel>
+							<views:NumberInputView DataContext="{Binding IntensityInputVM}" />
+							<views:NumberInputView DataContext="{Binding MinDurationInputVM}" />
+							<views:NumberInputView DataContext="{Binding MaxDurationInputVM}" />
 					</StackPanel>
 					<StackPanel Grid.Column="1"
 								Spacing="20">

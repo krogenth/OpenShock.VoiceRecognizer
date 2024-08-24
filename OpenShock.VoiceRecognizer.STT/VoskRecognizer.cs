@@ -15,7 +15,7 @@ public class VoskSpeechRecognizer : BaseRecognizer
 	private VoskRecognizer? _recognizer;
 	private WasapiCapture? _capture;
 
-	public VoskSpeechRecognizer(OSCServer server) : base(server)
+	public VoskSpeechRecognizer()
 	{
 		AttachEventHandlers();
 	}

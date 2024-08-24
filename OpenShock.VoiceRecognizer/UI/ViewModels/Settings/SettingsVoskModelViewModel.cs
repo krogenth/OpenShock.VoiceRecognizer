@@ -2,7 +2,7 @@
 
 namespace OpenShock.VoiceRecognizer.UI.ViewModels.Settings;
 
-public class SettingsVoskModelViewModel : BaseViewModel
+public class SettingsVoskModelViewModel : BasedSettingsViewModel
 {
 	private string _selectedModelDirectory = string.Empty;
 
@@ -11,13 +11,17 @@ public class SettingsVoskModelViewModel : BaseViewModel
 		_selectedModelDirectory = ConfigurationState.Instance!.Vosk.ModelDirectory.Value;
 	}
 
+	public override void SaveToConfigurationState()
+	{
+		ConfigurationState.Instance!.Vosk.ModelDirectory.Value = _selectedModelDirectory;
+	}
+
 	public string SelectedModelDirectory
 	{
 		get => _selectedModelDirectory;
 		set
 		{
 			_selectedModelDirectory = value;
-			ConfigurationState.Instance!.Vosk.ModelDirectory.Value = value;
 			OnPropertyChanged(nameof(SelectedModelDirectory));
 		}
 	}

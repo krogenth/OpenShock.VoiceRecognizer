@@ -2,6 +2,7 @@
 using Avalonia.ReactiveUI;
 using System;
 using OpenShock.VoiceRecognizer.Configuration;
+using OpenShock.VoiceRecognizer.IO.Logger;
 
 namespace OpenShock.VoiceRecognizer;
 
@@ -14,6 +15,7 @@ internal sealed class Program
 	public static void Main(string[] args)
 	{
 		InitializeConfig();
+		Logger.Initialize();
 
 		BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 	}

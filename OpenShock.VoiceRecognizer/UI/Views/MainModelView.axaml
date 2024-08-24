@@ -4,9 +4,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-			 xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels"
-			 xmlns:views="using:OpenShock.VoiceRecognizer.UI.Views"
-			 x:DataType="vm:MainModelViewModel">
+             xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels"
+             xmlns:views="using:OpenShock.VoiceRecognizer.UI.Views"
+             x:DataType="vm:MainModelViewModel">
 
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
@@ -15,9 +15,9 @@
 	</Design.DataContext>
 
 	<StackPanel Orientation="Vertical"
-				  HorizontalAlignment="Stretch"
-				  VerticalAlignment="Stretch"
-				  Margin="10">
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Stretch"
+				Margin="10">
 		<StackPanel Orientation="Vertical"
 					Margin="10">
 			<TextBlock Text="Recognizer:" />
@@ -28,7 +28,9 @@
 				<Button Command="{Binding StopRecognizer}" IsEnabled="{Binding CanStopRecognizer}">Stop</Button>
 			</StackPanel>
 		</StackPanel>
-		
-		<TextBlock Text="{Binding RecognizedText}" />
+		<StackPanel Margin="10">
+			<TextBlock Text="{Binding RecognizedText}" />
+			<CheckBox IsChecked="{Binding WasRecognized}" IsEnabled="False">Was Recognized?</CheckBox>
+		</StackPanel>
 	</StackPanel>
 </UserControl>

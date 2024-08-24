@@ -22,6 +22,10 @@ public class SettingsWindowViewModel
 
 	public void SaveSettings()
 	{
+		GeneralVM.SaveToConfigurationState();
+		VoskVM.SaveToConfigurationState();
+		ZapVM.SaveToConfigurationState();
+		OpenShockVM.SaveToConfigurationState();
 		ConfigurationState.Instance!.SaveConfigurationStateToFile();
 		CloseWindow?.Invoke();
 	}

@@ -1,37 +1,46 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using OpenShock.VoiceRecognizer.Configuration;
+using OpenShock.VoiceRecognizer.Integrations.OpenShock;
+using static OpenShock.VoiceRecognizer.Integrations.OpenShock.DevicesUpdatedEventArgs;
 
 namespace OpenShock.VoiceRecognizer.UI.ViewModels.Settings;
 
-public class SettingsOpenShockViewModel : BaseViewModel
+public class SettingsOpenShockViewModel : BasedSettingsViewModel
 {
-	public StringInputViewModel SendHostSelectorVM { get; set; }
-	public NumberInputViewModel SendPortSelectorVM { get; set; }
-	public StringInputViewModel ListenIntensityEndpointSelectorVM { get; set; }
-	public StringInputViewModel SendShockEndpointSelectorVM { get; set; }
-	public StringInputViewModel SendVibrateEndpointSelectorVM { get; set; }
+	public StringInputViewModel APIKeySelectorVM { get; set; }
+	public GuidSelectorViewModel DeviceIDSelectorVM { get; set; }
+	public GuidSelectorViewModel ShockerIDSelectorVM { get; set; }
+
+	private string _apiKey;
+	private Guid _deviceID;
+	private Guid _shockerID;
 
 	public SettingsOpenShockViewModel()
 	{
-		SendHostSelectorVM = new(
-			"Host",
-			ConfigurationState.Instance!.OpenShock.SendHost.Value
+		OpenShockAPI.Instance.DevicesUpdated += OnDevicesChanged;
+		OpenShockAPI.Instance.ShockersUpdated += OnShockersUpdated;
+		OpenShockAPI.Instance.RefreshShockers();
+
+		_apiKey = ConfigurationState.Instance!.OpenShock.APIKey.Value;
+		_deviceID = ConfigurationState.Instance!.OpenShock.DeviceID.Value;
+		_shockerID = ConfigurationState.Instance!.OpenShock.ShockerID.Value;
+
+		APIKeySelectorVM = new(
+			"API Key",
+			_apiKey
 		);
-		SendPortSelectorVM = new(
-			"Port",
-			ConfigurationState.Instance!.OpenShock.SendPort.Value
+		DeviceIDSelectorVM = new(
+			"Device",
+			[],
+			_deviceID
 		);
-		ListenIntensityEndpointSelectorVM = new(
-			"Intensity Listen Endpoint",
-			ConfigurationState.Instance!.OpenShock.ExternalListenSetIntensityEndpoint.Value
-		);
-		SendShockEndpointSelectorVM = new(
-			"Send Shock Endpoint",
-			ConfigurationState.Instance!.OpenShock.ExternalSendStartShockEndpoint.Value
-		);
-		SendVibrateEndpointSelectorVM = new(
-			"Send Vibrate Endpoint",
-			ConfigurationState.Instance!.OpenShock.ExternalSendStartVibrationEndpoint.Value
+		ShockerIDSelectorVM = new(
+			"Shocker",
+			[],
+			_shockerID
 		);
 
 		AttachEventHandlers();
@@ -39,25 +48,46 @@ public class SettingsOpenShockViewModel : BaseViewModel
 
 	private void AttachEventHandlers()
 	{
-		SendHostSelectorVM.PropertyChanged += OnSendHostChanged;
-		SendPortSelectorVM.PropertyChanged += OnSendPortChanged;
-		ListenIntensityEndpointSelectorVM.PropertyChanged += OnListenIntensityEndpointChanged;
-		SendShockEndpointSelectorVM.PropertyChanged += OnSendShockEndpointChanged;
-		SendVibrateEndpointSelectorVM.PropertyChanged += OnSendVibrateEndpointChanged;
+		APIKeySelectorVM.PropertyChanged += OnAPIKeyChanged;
+		DeviceIDSelectorVM.GuidChanged += OnDeviceIDChanged;
+		ShockerIDSelectorVM.GuidChanged += OnShockerIDChanged;
 	}
 
-	private void OnSendHostChanged(object? sender, PropertyChangedEventArgs e)
-		=> ConfigurationState.Instance!.OpenShock.SendHost.Value = SendHostSelectorVM.Text!;
+	private void OnDevicesChanged(object? sender, DevicesUpdatedEventArgs e)
+	{
+		IEnumerable<Guid> devices = [];
+		foreach ( var device in e.Devices)
+		{
+			devices = devices.Append(device.Id);
+		}
 
-	private void OnSendPortChanged(object? sender, PropertyChangedEventArgs e)
-		=> ConfigurationState.Instance!.OpenShock.SendPort.Value = SendPortSelectorVM.Value!;
+		DeviceIDSelectorVM.UpdateGuids(devices);
+	}
 
-	private void OnListenIntensityEndpointChanged(object? sender, PropertyChangedEventArgs e)
-		=> ConfigurationState.Instance!.OpenShock.ExternalListenSetIntensityEndpoint.Value = ListenIntensityEndpointSelectorVM.Text!;
+	private void OnShockersUpdated(object? sender, ShockersUpdatedEventArgs e)
+	{
+		IEnumerable<Guid> shockers = [];
+		foreach (var shocker in e.Shockers)
+		{
+			shockers = shockers.Append(shocker.Id);
+		}
 
-	private void OnSendShockEndpointChanged(object? sender, PropertyChangedEventArgs e)
-		=> ConfigurationState.Instance!.OpenShock.ExternalSendStartShockEndpoint.Value = SendShockEndpointSelectorVM.Text!;
+		ShockerIDSelectorVM.UpdateGuids(shockers);
+	}
 
-	private void OnSendVibrateEndpointChanged(object? sender, PropertyChangedEventArgs e)
-		=> ConfigurationState.Instance!.OpenShock.ExternalSendStartVibrationEndpoint.Value = SendVibrateEndpointSelectorVM.Text!;
+	public override void SaveToConfigurationState()
+	{
+		ConfigurationState.Instance!.OpenShock.APIKey.Value = _apiKey;
+		ConfigurationState.Instance!.OpenShock.DeviceID.Value = _deviceID;
+		ConfigurationState.Instance!.OpenShock.ShockerID.Value = _shockerID;
+	}
+
+	private void OnAPIKeyChanged(object? sender, PropertyChangedEventArgs e) =>
+		_apiKey = APIKeySelectorVM.Text!;
+
+	private void OnDeviceIDChanged(object? sender, GuidChangedEventArgs e) =>
+		_deviceID = e.Value;
+
+	private void OnShockerIDChanged(object? sender, GuidChangedEventArgs e) =>
+		_shockerID = e.Value;
 }

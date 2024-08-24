@@ -8,6 +8,7 @@ public class MainModelViewModel : BaseViewModel
 {
 	private readonly OSCServer _oscServer;
 	private string _recognizedText = string.Empty;
+	private bool _wasRecognized = false;
 
 	public BaseRecognizer? BaseSpeechRecognizer { get; set; }
 
@@ -18,6 +19,16 @@ public class MainModelViewModel : BaseViewModel
 		{
 			_recognizedText = value ?? string.Empty;
 			OnPropertyChanged(nameof(RecognizedText));
+		}
+	}
+
+	public bool WasRecognized
+	{
+		get => _wasRecognized;
+		set
+		{
+			_wasRecognized = value;
+			OnPropertyChanged(nameof(WasRecognized));
 		}
 	}
 
@@ -32,13 +43,17 @@ public class MainModelViewModel : BaseViewModel
 
 	private void SelectRecognizer()
 	{
-		BaseSpeechRecognizer = new VoskSpeechRecognizer(_oscServer);
+		BaseSpeechRecognizer = new VoskSpeechRecognizer();
 		BaseSpeechRecognizer.RecognizedSpeech += OnRecognizedSpeech;
+		BaseSpeechRecognizer.NGramRecognized += WasRecognizedSpeech;
 		BaseSpeechRecognizer.StateChanged += OnRecognizerStateChanged;
 	}
 
 	private void OnRecognizedSpeech(object? sender, RecognizedSpeechEventArgs e) =>
 		RecognizedText = e.Text;
+
+	private void WasRecognizedSpeech(object? sender, WasRecognizedEventArgs e) =>
+		WasRecognized = e.Value;
 
 	private void OnOSCRecognizerToggle(object? sender, RecognizerToggleEventArgs e)
 	{

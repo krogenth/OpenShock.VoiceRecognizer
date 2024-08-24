@@ -9,11 +9,17 @@
   <ItemGroup>
     <PackageReference Include="BuildSoft.OscCore" />
     <PackageReference Include="OpenShock.SDK.CSharp" />
-    <PackageReference Include="OpenShock.SDK.CSharp.Hub" />
+	<PackageReference Include="OpenShock.SDK.CSharp.Hub" />
+	<PackageReference Include="OpenShock.SDK.CSharp.Live" />
+  </ItemGroup>
+
+  <ItemGroup>
+     <PackageReference Include="Serilog" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OpenShock.VoiceRecognizer.Configuration\OpenShock.VoiceRecognizer.Configuration.csproj" />
+    <ProjectReference Include="..\OpenShock.VoiceRecognizer.IO\OpenShock.VoiceRecognizer.IO.csproj" />
   </ItemGroup>
 
 </Project>

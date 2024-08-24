@@ -18,8 +18,13 @@ public partial class SettingsZapView : UserControl
 		var words = (DataContext as SettingsZapViewModel)!.Words;
 		var word = (DataContext as SettingsZapViewModel)!.InputText;
 		var shockType = (DataContext as SettingsZapViewModel)!.ShockType;
+		var minInitialDelay = (DataContext as SettingsZapViewModel)!.MinDelay;
+		var maxInitialDelay = (DataContext as SettingsZapViewModel)!.MaxDelay;
 		var minDelay = (DataContext as SettingsZapViewModel)!.MinDelay;
 		var maxDelay = (DataContext as SettingsZapViewModel)!.MaxDelay;
+		var intensity = (DataContext as SettingsZapViewModel)!.Intensity;
+		var minDuration = (DataContext as SettingsZapViewModel)!.MinDuration;
+		var maxDuration = (DataContext as SettingsZapViewModel)!.MaxDuration;
 
 		if (!string.IsNullOrWhiteSpace(word) && !words.Any(w => w.Word.Contains(word)))
 		{
@@ -28,8 +33,13 @@ public partial class SettingsZapView : UserControl
 			{
 				Word = word,
 				Type = shockType,
+				MinInitialDelay = minInitialDelay,
+				MaxInitialDelay = maxInitialDelay,
 				MinDelay = minDelay,
 				MaxDelay = maxDelay,
+				Intensity = intensity,
+				MinDuration = minDuration,
+				MaxDuration = maxDuration,
 			});
 			ConfigurationState.Instance!.Shock.Words.Value = words;
 		}

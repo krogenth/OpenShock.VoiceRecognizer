@@ -17,11 +17,9 @@
 					HorizontalAlignment="Stretch"
 					Orientation="Vertical"
 					Spacing="10">
-			<views:StringInputView DataContext="{Binding SendHostSelectorVM}" />
-			<views:NumberInputView DataContext="{Binding SendPortSelectorVM}" />
-			<views:StringInputView DataContext="{Binding ListenIntensityEndpointSelectorVM}" />
-			<views:StringInputView DataContext="{Binding SendShockEndpointSelectorVM}" />
-			<views:StringInputView DataContext="{Binding SendVibrateEndpointSelectorVM}" />
+			<views:StringInputView DataContext="{Binding APIKeySelectorVM}" />
+			<views:GuidSelectorView DataContext="{Binding DeviceIDSelectorVM}" />
+			<views:GuidSelectorView DataContext="{Binding ShockerIDSelectorVM}" />
 		</StackPanel>
 	</ScrollViewer>
 </UserControl>
