@@ -7,19 +7,12 @@
              xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels"
 			 xmlns:views="using:OpenShock.VoiceRecognizer.UI.Views"
 			 x:DataType="vm:MenuBarViewModel">
-
-	<Design.DataContext>
-		<!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-		<vm:MenuBarViewModel/>
-	</Design.DataContext>
-	
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="_File" />
 			<MenuItem Header="Options">
 				<MenuItem Header="_Settings"
-						  Command="{Binding OpenSettings}" />
+						  Command="{Binding OpenSettingsWindow}" />
 			</MenuItem>
 		</Menu>
 	</DockPanel>

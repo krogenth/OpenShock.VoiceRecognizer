@@ -35,9 +35,15 @@ public class WordRecognition
 	public ShockType Type { get; set; }
 	public float MinInitialDelay { get; set; }
 	public float MaxInitialDelay { get; set; }
+	public string InitialDelayRange => $"{MinInitialDelay} - {MaxInitialDelay}";
 	public float MinDelay { get; set; }
 	public float MaxDelay { get; set; }
-	public byte Intensity { get; set; }
+	public string DelayRange => $"{MinDelay} - {MaxDelay}";
+	public byte MinIntensity { get; set; }
+	public byte MaxIntensity { get; set; }
+	public string IntensityRange => $"{MinIntensity} - {MaxIntensity}";
 	public ushort MinDuration { get; set; }
 	public ushort MaxDuration { get; set; }
+	public string DurationRange => $"{MinDuration} - {MaxDuration}";
+	public bool Active { get; set; }
 }

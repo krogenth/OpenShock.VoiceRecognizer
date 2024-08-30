@@ -8,8 +8,11 @@ namespace OpenShock.VoiceRecognizer.UI.Windows;
 
 public partial class SettingsWindow : Window
 {
-	public SettingsWindow(SettingsWindowViewModel viewModel)
+	public WordRecognitionWindow? WordRecognitionWindow { get; set; }
+
+	public SettingsWindow()
 	{
+		var viewModel = new SettingsWindowViewModel(this);
 		DataContext = viewModel;
 		viewModel.CloseWindow += Close;
 
@@ -17,9 +20,11 @@ public partial class SettingsWindow : Window
 		Load();
 	}
 
-	public SettingsWindow()
+	public SettingsWindow(SettingsWindowViewModel viewModel)
 	{
-		DataContext = new SettingsWindowViewModel();
+		DataContext = viewModel;
+		viewModel.CloseWindow += Close;
+
 		InitializeComponent();
 		Load();
 	}

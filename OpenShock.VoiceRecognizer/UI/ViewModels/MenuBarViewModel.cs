@@ -11,14 +11,14 @@ public class MenuBarViewModel : BaseViewModel
 	public MenuBarViewModel(MainWindow window)
 	{
 		Window = window;
-		OpenSettingsCommand = ReactiveCommand.Create(OpenSettings);
+		OpenSettingsWindowCommand = ReactiveCommand.Create(OpenSettingsWindow);
 	}
 
-	public ReactiveCommand<Unit, Unit> OpenSettingsCommand { get; }
+	public ReactiveCommand<Unit, Unit> OpenSettingsWindowCommand { get; }
 
-	public async void OpenSettings()
+	public async void OpenSettingsWindow()
 	{
-		Window!.SettingsWindow = new(new Settings.SettingsWindowViewModel());
+		Window.SettingsWindow = new();
 		await Window.SettingsWindow.ShowDialog(Window).ConfigureAwait(false);
 		Window.SettingsWindow = null;
 	}

@@ -1,5 +1,5 @@
 <Window x:Class="OpenShock.VoiceRecognizer.UI.Windows.SettingsWindow"
-        Title="SettingsWindow"
+        Title="Settings"
 		xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -68,6 +68,10 @@
 			<Button HotKey="Enter"
 					Command="{Binding SaveSettings}">
 				Save
+			</Button>
+			<Button HotKey="Enter"
+					Command="{Binding Close}">
+				Close
 			</Button>
 		</StackPanel>
 	</Grid>

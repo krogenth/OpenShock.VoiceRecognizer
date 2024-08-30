@@ -1,0 +1,54 @@
+<Window x:Class="OpenShock.VoiceRecognizer.UI.Windows.WordRecognitionWindow"
+		Title="Word Recognition"
+		xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d"
+		xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels"
+		xmlns:enums="using:OpenShock.VoiceRecognizer.UI.Views.Enums"
+		xmlns:numbers="using:OpenShock.VoiceRecognizer.UI.Views.Numbers"
+		xmlns:views="using:OpenShock.VoiceRecognizer.UI.Views"
+		x:DataType="vm:WordRecognitionWindowViewModel"
+		Focusable="True"
+		Width="800"
+		Height="480"
+		MinWidth="800"
+		MinHeight="480"
+		WindowStartupLocation="CenterOwner">
+	<ScrollViewer Name="WordRecognition"
+				  HorizontalAlignment="Stretch"
+				  VerticalAlignment="Stretch"
+				  HorizontalScrollBarVisibility="Disabled"
+				  VerticalScrollBarVisibility="Auto">
+		<StackPanel Margin="10"
+					HorizontalAlignment="Stretch"
+					Orientation="Vertical"
+					Spacing="10">
+			<views:StringInputView DataContext="{Binding TextInputVM}" />
+			<enums:ShockTypeSelectorView DataContext="{Binding ShockTypeSelectorVM}" />
+			<numbers:FloatInputView DataContext="{Binding MinInitialDelayInputVM}" />
+			<numbers:FloatInputView DataContext="{Binding MaxInitialDelayInputVM}" />
+			<numbers:FloatInputView DataContext="{Binding MinDelayInputVM}" />
+			<numbers:FloatInputView DataContext="{Binding MaxDelayInputVM}" />
+			<numbers:ByteInputView DataContext="{Binding MinIntensityInputVM}" />
+			<numbers:ByteInputView DataContext="{Binding MaxIntensityInputVM}" />
+			<numbers:UShortInputView DataContext="{Binding MinDurationInputVM}" />
+			<numbers:UShortInputView DataContext="{Binding MaxDurationInputVM}" />
+			<StackPanel Grid.Row="2"
+						Margin="10"
+						Spacing="10"
+						Orientation="Horizontal"
+						HorizontalAlignment="Right">
+				<Button HotKey="Enter"
+						Command="{Binding Save}">
+					Save
+				</Button>
+				<Button HotKey="Enter"
+						Command="{Binding Close}">
+					Close
+				</Button>
+			</StackPanel>
+		</StackPanel>
+	</ScrollViewer>
+</Window>

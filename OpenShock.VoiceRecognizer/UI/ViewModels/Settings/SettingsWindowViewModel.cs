@@ -1,24 +1,17 @@
 ﻿using System;
 using OpenShock.VoiceRecognizer.Configuration;
+using OpenShock.VoiceRecognizer.UI.Windows;
 
 namespace OpenShock.VoiceRecognizer.UI.ViewModels.Settings;
 
-public class SettingsWindowViewModel
+public class SettingsWindowViewModel(SettingsWindow window)
 {
 	public event Action? CloseWindow;
 
-	public SettingsGeneralViewModel GeneralVM { get; }
-	public SettingsVoskModelViewModel VoskVM { get; }
-	public SettingsZapViewModel ZapVM { get; }
-	public SettingsOpenShockViewModel OpenShockVM { get; }
-
-	public SettingsWindowViewModel()
-	{
-		GeneralVM = new();
-		VoskVM = new();
-		ZapVM = new();
-		OpenShockVM = new();
-	}
+	public SettingsGeneralViewModel GeneralVM { get; } = new();
+	public SettingsVoskModelViewModel VoskVM { get; } = new();
+	public SettingsZapViewModel ZapVM { get; } = new(window);
+	public SettingsOpenShockViewModel OpenShockVM { get; } = new();
 
 	public void SaveSettings()
 	{
@@ -27,6 +20,7 @@ public class SettingsWindowViewModel
 		ZapVM.SaveToConfigurationState();
 		OpenShockVM.SaveToConfigurationState();
 		ConfigurationState.Instance!.SaveConfigurationStateToFile();
-		CloseWindow?.Invoke();
 	}
+
+	public void Close() => CloseWindow?.Invoke();
 }

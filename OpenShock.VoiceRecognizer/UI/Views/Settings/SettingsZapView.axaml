@@ -5,78 +5,72 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 mc:Ignorable="d"
 			 xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels.Settings"
+			 xmlns:numbers="using:OpenShock.VoiceRecognizer.UI.Views.Numbers"
 			 xmlns:selectors="using:OpenShock.VoiceRecognizer.UI.Views.Enums"
 			 xmlns:views="using:OpenShock.VoiceRecognizer.UI.Views"
 			 x:DataType="vm:SettingsZapViewModel">
-	<ScrollViewer Name="GeneralPage"
+	<Grid Name="GeneralPage"
+		  HorizontalAlignment="Stretch"
+		  VerticalAlignment="Stretch">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<TextBlock Grid.Row="0"
+				   Text="Recognized Words"
+				   Margin="10" />
+		<StackPanel Grid.Row="1"
+					HorizontalAlignment="Stretch"
+					VerticalAlignment="Stretch"
+					Spacing="20"
+					Margin="10"
+					Orientation="Horizontal">
+			<Button Name="RemoveButton"
+					MinWidth="90"
+					Command="{Binding RemoveWord}"
+					IsEnabled="{Binding HasSelectedWord}">
+				<TextBlock HorizontalAlignment="Center"
+							Text="Remove" />
+			</Button>
+			<Button Name="EditButton"
+					MinWidth="90"
+					Command="{Binding OpenEditWordRecognitionWindow}"
+					IsEnabled="{Binding HasSelectedWord}">
+				<TextBlock HorizontalAlignment="Center"
+							Text="Edit" />
+			</Button>
+			<Button Name="AddButton"
+					MinWidth="90"
+					Command="{Binding OpenAddWordRecognitionWindow}">
+				<TextBlock HorizontalAlignment="Center"
+							Text="Add" />
+			</Button>
+		</StackPanel>
+		<DataGrid Grid.Row="2"
+				  Margin="10,0"
+				  ItemsSource="{Binding Words}"
+				  IsReadOnly="False"
+				  CanUserReorderColumns="True"
+				  CanUserResizeColumns="True"
+				  CanUserSortColumns="False"
+				  GridLinesVisibility="All"
 				  HorizontalAlignment="Stretch"
 				  VerticalAlignment="Stretch"
-				  HorizontalScrollBarVisibility="Disabled"
-				  VerticalScrollBarVisibility="Auto">
-		<StackPanel Margin="10"
-					HorizontalAlignment="Stretch"
-					Orientation="Vertical"
-					Spacing="10">
-			<TextBlock Text="Recognized Words" />
-			<StackPanel Margin="10,0,0,0"
-						HorizontalAlignment="Stretch"
-						VerticalAlignment="Stretch"
-						Orientation="Vertical"
-						Spacing="10">
-				<DataGrid ItemsSource="{Binding Words}"
-						  IsReadOnly="False"
-						  AutoGenerateColumns="True"
-						  CanUserReorderColumns="True"
-						  CanUserResizeColumns="True"
-						  CanUserSortColumns="False"
-						  GridLinesVisibility="All"
-						  HorizontalAlignment="Stretch"
-						  VerticalAlignment="Stretch"
-						  BorderThickness="1"
-						  BorderBrush="Gray"
-						  HeadersVisibility="Column"
-						  ColumnWidth="*"
-						  SelectedIndex="{Binding SelectedWordIndex}"
-						  SelectionMode="Single"
-						  >
-				</DataGrid>
-				<Grid HorizontalAlignment="Stretch">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<StackPanel Grid.Column="0"
-								Spacing="20">
-							<views:StringInputView DataContext="{Binding TextInputVM}" />
-							<selectors:ShockTypeSelectorView DataContext="{Binding ShockTypeSelectorVM}" />
-							<views:NumberInputView DataContext="{Binding MinInitialDelayInputVM}" />
-							<views:NumberInputView DataContext="{Binding MaxInitialDelayInputVM}" />
-							<views:NumberInputView DataContext="{Binding MinDelayInputVM}" />
-							<views:NumberInputView DataContext="{Binding MaxDelayInputVM}" />
-							<views:NumberInputView DataContext="{Binding IntensityInputVM}" />
-							<views:NumberInputView DataContext="{Binding MinDurationInputVM}" />
-							<views:NumberInputView DataContext="{Binding MaxDurationInputVM}" />
-					</StackPanel>
-					<StackPanel Grid.Column="1"
-								Spacing="20">
-						<Button Name="RemoveButton"
-								MinWidth="90"
-								Margin="10,0,0,0"
-								Click="WordRemoveClicked"
-								IsEnabled="{Binding HasSelectedWord}">
-							<TextBlock HorizontalAlignment="Center"
-									   Text="Remove" />
-						</Button>
-						<Button Name="AddButton"
-								MinWidth="90"
-								Margin="10,0,0,0"
-								Click="WordAddClicked">
-							<TextBlock HorizontalAlignment="Center"
-									   Text="Add" />
-						</Button>
-					</StackPanel>
-				</Grid>
-			</StackPanel>
-		</StackPanel>
-	</ScrollViewer>
+				  BorderThickness="1"
+				  BorderBrush="Gray"
+				  HeadersVisibility="Column"
+				  ColumnWidth="*"
+				  SelectedIndex="{Binding SelectedWordIndex}"
+				  SelectionMode="Single">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Text" Binding="{Binding Word}" />
+				<DataGridTextColumn Header="Initial Delay (sec)" Binding="{Binding InitialDelayRange}" />
+				<DataGridTextColumn Header="Delay (sec)" Binding="{Binding DelayRange}" />
+				<DataGridTextColumn Header="Intensity (%)" Binding="{Binding IntensityRange}" />
+				<DataGridTextColumn Header="Duration (ms)" Binding="{Binding DurationRange}" />
+				<DataGridCheckBoxColumn Header="Active?" Binding="{Binding Active}" />
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
 </UserControl>

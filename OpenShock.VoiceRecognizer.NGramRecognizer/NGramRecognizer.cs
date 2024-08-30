@@ -11,6 +11,12 @@ public static class NGramRecognizer
 
 		foreach (var word in words)
 		{
+			// skip all inactive words
+			if (!word.Active)
+			{
+				continue;
+			}
+
 			if (recognizedSpeech.Contains(word.Word, StringComparison.CurrentCultureIgnoreCase) &&
 				(result?.Type is null || (int?)result?.Type < (int)word.Type))
 			{

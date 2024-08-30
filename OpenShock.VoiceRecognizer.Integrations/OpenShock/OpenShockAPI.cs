@@ -123,12 +123,16 @@ public class OpenShockAPI : IDisposable
 	{
 		GenerateNewClient();
 		GenerateNewHubClient();
+		RefreshShockers();
 	}
 
 	private async Task GenerateNewGatewayAndControlClient(Guid deviceId)
 	{
-		await GenerateNewGateway(deviceId).ConfigureAwait(false);
-		await GenerateNewControlClient(deviceId).ConfigureAwait(false);
+		if (Client is not null)
+		{
+			await GenerateNewGateway(deviceId).ConfigureAwait(false);
+			await GenerateNewControlClient(deviceId).ConfigureAwait(false);
+		}
 	}
 
 	private void GenerateNewClient()
@@ -152,6 +156,11 @@ public class OpenShockAPI : IDisposable
 
 	private async Task GenerateNewGateway(Guid deviceId)
 	{
+		if (Client is null)
+		{
+			return;
+		}
+
 		var gateway = await Client!.GetDeviceGateway(deviceId).ConfigureAwait(false);
 		if (gateway.IsT1)
 		{

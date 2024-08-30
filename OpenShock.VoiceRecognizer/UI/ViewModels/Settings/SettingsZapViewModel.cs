@@ -1,79 +1,111 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Reactive;
 using OpenShock.VoiceRecognizer.Configuration;
-using OpenShock.VoiceRecognizer.UI.ViewModels.Enums;
-using OpenShock.VoiceRecognizer.Utility.Common;
+using ReactiveUI;
+using OpenShock.VoiceRecognizer.UI.Windows;
+using System.Linq;
 
 namespace OpenShock.VoiceRecognizer.UI.ViewModels.Settings;
 
 public class SettingsZapViewModel : BasedSettingsViewModel
 {
+	public SettingsWindow Window { get; set; }
+	private WordRecognitionWindowViewModel _wordRecognitionWindowVM;
+	private bool _isEditWordRecognition = false;
+
 	private int _selectedWordIndex;
 	public ObservableCollection<WordRecognition> Words { get; set; }
 
-	public StringInputViewModel TextInputVM { get; set; }
-	public ShockTypeSelectorViewModel ShockTypeSelectorVM { get; set; }
-	public NumberInputViewModel MinInitialDelayInputVM { get; set; }
-	public NumberInputViewModel MaxInitialDelayInputVM { get; set; }
-	public NumberInputViewModel MinDelayInputVM { get; set; }
-	public NumberInputViewModel MaxDelayInputVM { get; set; }
-	public NumberInputViewModel IntensityInputVM { get; set; }
-	public NumberInputViewModel MinDurationInputVM { get; set; }
-	public NumberInputViewModel MaxDurationInputVM { get; set; }
-
-	public SettingsZapViewModel()
+	public SettingsZapViewModel(SettingsWindow window)
 	{
 		_selectedWordIndex = -1;
 		Words = new(ConfigurationState.Instance!.Shock.Words.Value);
 
-		TextInputVM = new("Text", InputText);
-		ShockTypeSelectorVM = new("Shock Type", ShockType);
-		MinInitialDelayInputVM = new("Minimum Initial Delay (seconds)", 0);
-		MaxInitialDelayInputVM = new("Maximum Initial Delay (seconds)", 0);
-		MinDelayInputVM = new("Minimum Delay (seconds)", 0);
-		MaxDelayInputVM = new("Maximum Delay (seconds)", 0);
-		IntensityInputVM = new("Intensity", Intensity);
-		MinDurationInputVM = new("Minimum Duration (seconds)", MinDuration);
-		MaxDurationInputVM = new("Maximum Duration (seconds)", MaxDuration);
-
-		AttachHandlers();
+		Window = window;
+		OpenAddWordRecognitionWindowCommand = ReactiveCommand.Create(OpenAddWordRecognitionWindow);
+		OpenEditWordRecognitionWindowCommand = ReactiveCommand.Create(OpenEditWordRecognitionWindow);
+		RemoveWordCommand = ReactiveCommand.Create(RemoveWord);
 	}
 
-	private void AttachHandlers()
+	public ReactiveCommand<Unit, Unit> OpenAddWordRecognitionWindowCommand { get; }
+
+	public async void OpenAddWordRecognitionWindow()
 	{
-		TextInputVM.PropertyChanged += OnTextInputChanged;
-		ShockTypeSelectorVM.EnumChanged += OnShockTypeSelected;
-		MinInitialDelayInputVM.PropertyChanged += OnMinInitialDelayInputChanged;
-		MaxInitialDelayInputVM.PropertyChanged += OnMaxInitialDelayInputChanged;
-		MinDelayInputVM.PropertyChanged += OnMinDelayInputChanged;
-		MaxDelayInputVM.PropertyChanged += OnMaxDelayInputChanged;
-		IntensityInputVM.PropertyChanged += OnIntensityInputChanged;
-		MinDurationInputVM.PropertyChanged += OnMinDurationInputChanged;
-		MaxDurationInputVM.PropertyChanged += OnMaxDurationInputChanged;
+		if (Window is not null)
+		{
+			_isEditWordRecognition = false;
+			_wordRecognitionWindowVM = new();
+			_wordRecognitionWindowVM.SaveWord += OnWordRecognitionSave;
+			Window.WordRecognitionWindow = new(_wordRecognitionWindowVM);
+			await Window.WordRecognitionWindow.ShowDialog(Window).ConfigureAwait(false);
+			Window.WordRecognitionWindow = null;
+		}
 	}
 
-	private void OnTextInputChanged(object? sender, EventArgs e) =>
-		InputText = TextInputVM.Text ?? string.Empty;
-	private void OnShockTypeSelected(object? sender, EnumChangedEventArgs<ShockType> e) =>
-		ShockType = e.Value;
-	private void OnMinInitialDelayInputChanged(object? sender, EventArgs e) =>
-		MinDelay = MinInitialDelayInputVM.Value;
-	private void OnMaxInitialDelayInputChanged(object? sender, EventArgs e) =>
-		MaxDelay = MaxInitialDelayInputVM.Value;
-	private void OnMinDelayInputChanged(object? sender, EventArgs e) =>
-		MinDelay = MinDelayInputVM.Value;
-	private void OnMaxDelayInputChanged(object? sender, EventArgs e) =>
-		MaxDelay = MaxDelayInputVM.Value;
-	private void OnIntensityInputChanged(object? sender, EventArgs e) =>
-		MinDelay = IntensityInputVM.Value;
-	private void OnMinDurationInputChanged(object? sender, EventArgs e) =>
-		MinDelay = MinDurationInputVM.Value;
-	private void OnMaxDurationInputChanged(object? sender, EventArgs e) =>
-		MaxDelay = MaxDurationInputVM.Value;
+	public ReactiveCommand<Unit, Unit> OpenEditWordRecognitionWindowCommand { get; }
 
-	public override void SaveToConfigurationState()
+	public async void OpenEditWordRecognitionWindow()
 	{
+		if (Window is not null)
+		{
+			_isEditWordRecognition = true;
+			_wordRecognitionWindowVM = new(Words[SelectedWordIndex]);
+			_wordRecognitionWindowVM.SaveWord += OnWordRecognitionSave;
+			Window.WordRecognitionWindow = new(_wordRecognitionWindowVM);
+			await Window.WordRecognitionWindow.ShowDialog(Window).ConfigureAwait(false);
+			Window.WordRecognitionWindow = null;
+		}
+	}
+
+	public ReactiveCommand<Unit, Unit> RemoveWordCommand { get; }
+
+	public void RemoveWord()
+	{
+		Words.RemoveAt(SelectedWordIndex);
+		SelectedWordIndex = -1;
+	}
+
+	public override void SaveToConfigurationState() =>
 		ConfigurationState.Instance!.Shock.Words.Value = Words;
+
+	private void OnWordRecognitionSave()
+	{
+		if (!string.IsNullOrWhiteSpace(_wordRecognitionWindowVM.InputText) &&
+			!Words.ToList().Any(w =>w.Word.Contains(_wordRecognitionWindowVM.InputText, System.StringComparison.CurrentCultureIgnoreCase))
+		)
+		{
+			if (!_isEditWordRecognition)
+			{
+				Words.Add(new WordRecognition()
+				{
+					Word = _wordRecognitionWindowVM.InputText,
+					Type = _wordRecognitionWindowVM.ShockType,
+					MinInitialDelay = _wordRecognitionWindowVM.MinInitialDelay,
+					MaxInitialDelay = _wordRecognitionWindowVM.MaxInitialDelay,
+					MinDelay = _wordRecognitionWindowVM.MinDelay,
+					MaxDelay = _wordRecognitionWindowVM.MaxDelay,
+					MinDuration = _wordRecognitionWindowVM.MinDuration,
+					MaxDuration = _wordRecognitionWindowVM.MaxDuration,
+					MinIntensity = _wordRecognitionWindowVM.MinIntensity,
+					MaxIntensity = _wordRecognitionWindowVM.MaxIntensity,
+				});
+			}
+			else
+			{
+				Words[SelectedWordIndex].Word = _wordRecognitionWindowVM.InputText;
+				Words[SelectedWordIndex].Type = _wordRecognitionWindowVM.ShockType;
+				Words[SelectedWordIndex].MinInitialDelay = _wordRecognitionWindowVM.MinInitialDelay;
+				Words[SelectedWordIndex].MaxInitialDelay = _wordRecognitionWindowVM.MaxInitialDelay;
+				Words[SelectedWordIndex].MinDelay = _wordRecognitionWindowVM.MinDelay;
+				Words[SelectedWordIndex].MaxDelay = _wordRecognitionWindowVM.MaxDelay;
+				Words[SelectedWordIndex].MinDuration = _wordRecognitionWindowVM.MinDuration;
+				Words[SelectedWordIndex].MaxDuration = _wordRecognitionWindowVM.MaxDuration;
+				Words[SelectedWordIndex].MinIntensity = _wordRecognitionWindowVM.MinIntensity;
+				Words[SelectedWordIndex].MaxIntensity = _wordRecognitionWindowVM.MaxIntensity;
+			}
+		}
+
+		
 	}
 
 	public int SelectedWordIndex
@@ -86,16 +118,6 @@ public class SettingsZapViewModel : BasedSettingsViewModel
 			OnPropertyChanged(nameof(HasSelectedWord));
 		}
 	}
-
-	public string InputText { get; set; } = string.Empty;
-	public ShockType ShockType { get; set; } = ShockType.Vibrate;
-	public float MinInitialDelay { get; set; } = 0.0f;
-	public float MaxInitialDelay { get; set; } = 0.0f;
-	public float MinDelay { get; set; } = 0.0f;
-	public float MaxDelay { get; set; } = 0.0f;
-	public byte Intensity { get; set; } = 0;
-	public ushort MinDuration { get; set; } = 0;
-	public ushort MaxDuration { get; set; } = 0;
 
 	public bool HasSelectedWord => SelectedWordIndex <= Words.Count && SelectedWordIndex > -1;
 }

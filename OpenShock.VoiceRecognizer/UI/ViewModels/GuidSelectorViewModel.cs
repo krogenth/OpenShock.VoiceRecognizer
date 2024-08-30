@@ -30,7 +30,7 @@ public class GuidSelectorViewModel : BaseViewModel
 			Guids.Add(guid);
 		}
 
-		SelectedGuidIndex = SelectedGuidIndex;
+		OnPropertyChanged(nameof(SelectedGuidIndex));
 	}
 
 	public int SelectedGuidIndex
