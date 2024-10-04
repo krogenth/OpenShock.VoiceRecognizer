@@ -29,8 +29,9 @@ public class OpenShockAPI : IDisposable
 
 		if (ConfigurationState.Instance!.OpenShock.DeviceID.Value != Guid.Empty)
 		{
-			GenerateNewGatewayAndControlClient(ConfigurationState.Instance!.OpenShock.DeviceID.Value);
+			_ = GenerateNewGatewayAndControlClient(ConfigurationState.Instance!.OpenShock.DeviceID.Value);
 		}
+
 		AttachHandlers();
 	}
 
@@ -41,7 +42,7 @@ public class OpenShockAPI : IDisposable
 			return;
 		}
 
-		var response = await Client!.GetOwnShockers();
+		var response = await Client!.GetOwnShockers().ConfigureAwait(false);
 
 		response.Switch(success =>
 		{
@@ -66,7 +67,10 @@ public class OpenShockAPI : IDisposable
 			}
 		};
 
-		await HubClient?.Control(controls);
+		if (HubClient is not null)
+		{
+			await HubClient.Control(controls).ConfigureAwait(false);
+		}
 	}
 		
 
@@ -83,7 +87,10 @@ public class OpenShockAPI : IDisposable
 			}
 		};
 
-		await HubClient?.Control(controls);
+		if (HubClient is not null)
+		{
+			await HubClient.Control(controls).ConfigureAwait(false);
+		}
 	}
 
 	public async Task SendStop(Guid deviceId, ushort duration, byte intensity)
@@ -99,7 +106,10 @@ public class OpenShockAPI : IDisposable
 			}
 		};
 
-		await HubClient?.Control(controls);
+		if (HubClient is not null)
+		{
+			await HubClient.Control(controls).ConfigureAwait(false);
+		}
 	}
 
 	private void AttachHandlers()
@@ -108,22 +118,20 @@ public class OpenShockAPI : IDisposable
 		ConfigurationState.Instance!.OpenShock.DeviceID.ValueChanged += OnDeviceIDChanged;
 	}
 
-	private void OnAPIKeyChanged(object? _, ValueChangedEventArgs<string> e)
+	private void OnAPIKeyChanged(object? _, ReactiveObject<string>.ValueChangedEventArgs e)
 	{
 		GenerateNewClients();
 		_ = GenerateNewGatewayAndControlClient(ConfigurationState.Instance!.OpenShock.DeviceID.Value);
 	}
 
-	private void OnDeviceIDChanged(object? _, ValueChangedEventArgs<Guid> e)
-	{
+	private void OnDeviceIDChanged(object? _, ReactiveObject<Guid>.ValueChangedEventArgs e) =>
 		_ = GenerateNewGatewayAndControlClient(ConfigurationState.Instance!.OpenShock.DeviceID.Value);
-	}
 
 	private void GenerateNewClients()
 	{
 		GenerateNewClient();
 		GenerateNewHubClient();
-		RefreshShockers();
+		_ = RefreshShockers();
 	}
 
 	private async Task GenerateNewGatewayAndControlClient(Guid deviceId)
@@ -193,13 +201,11 @@ public class OpenShockAPI : IDisposable
 			ConfigurationState.Instance!.OpenShock.APIKey.Value,
 			Logger.GetLogger<OpenShockLiveControlClient>()
 		);
-		await ControlClient.InitializeAsync();
+		await ControlClient.InitializeAsync().ConfigureAwait(false);
 	}
 
-	public void Dispose()
-	{
-		ControlClient?.DisposeAsync().ConfigureAwait(false);
-	}
+	public void Dispose() =>
+		_ = ControlClient?.DisposeAsync().ConfigureAwait(false);
 }
 
 public class DevicesUpdatedEventArgs(IEnumerable<ResponseDeviceWithShockers> devices) : EventArgs

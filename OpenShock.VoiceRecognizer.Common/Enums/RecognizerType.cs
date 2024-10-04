@@ -7,7 +7,7 @@ namespace OpenShock.VoiceRecognizer.Common.Enums;
 public enum RecognizerType : int
 {
 	Vosk,
-	Whisper,
-	Chrome,
-	Custom,
+	BrowserProxy,
+	//Whisper,
+	//Custom,
 };

@@ -1,32 +1,23 @@
 ﻿using System.Collections.ObjectModel;
 using OpenShock.VoiceRecognizer.Common;
-using OpenShock.VoiceRecognizer.Common.Enums;
 using OpenShock.VoiceRecognizer.Utility.Common;
 
 namespace OpenShock.VoiceRecognizer.Configuration;
 
 public class ShockConfigurationState
 {
-	public ReactiveObject<ShockCollarType> CollarType { get; private set; }
 	public ReactiveObject<ObservableCollection<WordRecognition>> Words { get; private set; }
 
 	public ShockConfigurationState()
 	{
-		CollarType = new(ShockCollarType.OpenShock);
 		Words = new([]);
 	}
 
-	public void LoadFileConfiguration(ConfigurationFileFormat configurationFileFormat)
-	{
-		CollarType.Value = configurationFileFormat.CollarType;
+	public void LoadFileConfiguration(ConfigurationFileFormat configurationFileFormat) =>
 		Words.Value = configurationFileFormat.Words;
-	}
 
-	public void LoadDefaultConfiguration()
-	{
-		CollarType.Value = ShockCollarType.OpenShock;
+	public void LoadDefaultConfiguration() =>
 		Words.Value = [];
-	}
 }
 
 public class WordRecognition
@@ -45,5 +36,7 @@ public class WordRecognition
 	public ushort MinDuration { get; set; }
 	public ushort MaxDuration { get; set; }
 	public string DurationRange => $"{MinDuration} - {MaxDuration}";
+	public double Cooldown { get; set; }
+	public string CooldownStr => $"{Cooldown}";
 	public bool Active { get; set; }
 }

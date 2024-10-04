@@ -1,15 +1,14 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using OpenShock.VoiceRecognizer.Configuration;
+using OpenShock.VoiceRecognizer.Common.Audio;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
-using OpenShock.VoiceRecognizer.Configuration;
-using OpenShock.VoiceRecognizer.Common.Audio;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Vosk;
-using OpenShock.VoiceRecognizer.Integrations.OSC;
 
 namespace OpenShock.VoiceRecognizer.STT;
 
-public class VoskSpeechRecognizer : BaseRecognizer
+public sealed class VoskSpeechRecognizer : BaseRecognizer
 {
 	private Model? _model;
 	private VoskRecognizer? _recognizer;
@@ -21,7 +20,7 @@ public class VoskSpeechRecognizer : BaseRecognizer
 	}
 
 	private void AttachEventHandlers() =>
-		ConfigurationState.Instance!.Audio.InputDeviceID.ValueChanged += DeviceChanged;
+		ConfigurationState.Instance!.General.InputDeviceID.ValueChanged += DeviceChanged;
 
 	public override bool Start()
 	{
@@ -50,7 +49,12 @@ public class VoskSpeechRecognizer : BaseRecognizer
 				return false;
 			}
 
-			var device = AudioDevices.GetDeviceByID(ConfigurationState.Instance.Audio.InputDeviceID.Value);
+			var device = AudioDevices.GetDeviceByID(ConfigurationState.Instance.General.InputDeviceID.Value);
+			if (device is null)
+			{
+				return false;
+			}
+
 			_capture = new WasapiCapture(device)
 			{
 				ShareMode = AudioClientShareMode.Shared,
@@ -127,13 +131,8 @@ public class VoskSpeechRecognizer : BaseRecognizer
 		}
 	}
 
-	public override void Dispose()
-	{
-		if (!Stopped)
-		{
-			Stop();
-		}
-	}
+	public override void Dispose() =>
+		Stop();
 }
 
 public class VoskResultWord

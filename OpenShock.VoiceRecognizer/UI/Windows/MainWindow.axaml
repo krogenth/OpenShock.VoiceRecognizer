@@ -8,6 +8,10 @@
         xmlns:vm="using:OpenShock.VoiceRecognizer.UI.ViewModels"
 		xmlns:views="using:OpenShock.VoiceRecognizer.UI.Views"
         x:DataType="vm:MainWindowViewModel"
+		Width="240"
+		Height="240"
+		MinWidth="240"
+		MinHeight="240"
         Icon="/Assets/Icons/avalonia-logo.ico">
 
     <Design.DataContext>

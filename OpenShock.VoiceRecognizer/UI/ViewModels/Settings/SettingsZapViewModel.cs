@@ -10,7 +10,7 @@ namespace OpenShock.VoiceRecognizer.UI.ViewModels.Settings;
 public class SettingsZapViewModel : BasedSettingsViewModel
 {
 	public SettingsWindow Window { get; set; }
-	private WordRecognitionWindowViewModel _wordRecognitionWindowVM;
+	private WordRecognitionWindowViewModel? _wordRecognitionWindowVM;
 	private bool _isEditWordRecognition = false;
 
 	private int _selectedWordIndex;
@@ -70,11 +70,11 @@ public class SettingsZapViewModel : BasedSettingsViewModel
 
 	private void OnWordRecognitionSave()
 	{
-		if (!string.IsNullOrWhiteSpace(_wordRecognitionWindowVM.InputText) &&
-			!Words.ToList().Any(w =>w.Word.Contains(_wordRecognitionWindowVM.InputText, System.StringComparison.CurrentCultureIgnoreCase))
-		)
+		if (!string.IsNullOrWhiteSpace(_wordRecognitionWindowVM!.InputText))
 		{
-			if (!_isEditWordRecognition)
+			if (!_isEditWordRecognition &&
+				!Words.ToList().Any(w => w.Word.Contains(_wordRecognitionWindowVM.InputText, System.StringComparison.CurrentCultureIgnoreCase))
+			)
 			{
 				Words.Add(new WordRecognition()
 				{
@@ -88,7 +88,10 @@ public class SettingsZapViewModel : BasedSettingsViewModel
 					MaxDuration = _wordRecognitionWindowVM.MaxDuration,
 					MinIntensity = _wordRecognitionWindowVM.MinIntensity,
 					MaxIntensity = _wordRecognitionWindowVM.MaxIntensity,
+					Cooldown = _wordRecognitionWindowVM.Cooldown,
 				});
+
+				OnPropertyChanged(nameof(Words));
 			}
 			else
 			{
@@ -102,10 +105,11 @@ public class SettingsZapViewModel : BasedSettingsViewModel
 				Words[SelectedWordIndex].MaxDuration = _wordRecognitionWindowVM.MaxDuration;
 				Words[SelectedWordIndex].MinIntensity = _wordRecognitionWindowVM.MinIntensity;
 				Words[SelectedWordIndex].MaxIntensity = _wordRecognitionWindowVM.MaxIntensity;
+				Words[SelectedWordIndex].Cooldown = _wordRecognitionWindowVM.Cooldown;
+
+				OnPropertyChanged(nameof(Words));
 			}
 		}
-
-		
 	}
 
 	public int SelectedWordIndex

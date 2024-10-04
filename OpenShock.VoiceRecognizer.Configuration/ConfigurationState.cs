@@ -4,7 +4,7 @@ public class ConfigurationState
 {
 	private readonly string _fileLocation = $"{AppDomain.CurrentDomain.BaseDirectory}config.json";
 
-	public AudioConfigurationState Audio { get; }
+	public GeneralConfigurationState General { get; }
 	public VoskConfigurationState Vosk { get; }
 	public OSCConfigurationState OSC { get; }
 	public ShockConfigurationState Shock { get; }
@@ -15,7 +15,7 @@ public class ConfigurationState
 
 	private ConfigurationState()
 	{
-		Audio = new();
+		General = new();
 		Vosk = new();
 		OSC = new();
 		Shock = new();
@@ -39,7 +39,7 @@ public class ConfigurationState
 	{
 		if (ConfigurationFileFormat.TryLoad(_fileLocation, out ConfigurationFileFormat? configurationFileFormat))
 		{
-			Audio.LoadFileConfiguration(configurationFileFormat!);
+			General.LoadFileConfiguration(configurationFileFormat!);
 			Vosk.LoadFileConfiguration(configurationFileFormat!);
 			OSC.LoadFileConfiguration(configurationFileFormat!);
 			Shock.LoadFileConfiguration(configurationFileFormat!);
@@ -50,7 +50,7 @@ public class ConfigurationState
 
 	private void LoadDefaultConfigurationState()
 	{
-		Audio.LoadDefaultConfiguration();
+		General.LoadDefaultConfiguration();
 		Vosk.LoadDefaultConfiguration();
 		OSC.LoadDefaultConfiguration();
 		Shock.LoadDefaultConfiguration();

@@ -6,7 +6,7 @@ public class ReactiveObject<T>(T defaultValue)
 	private bool _isInitialized = false;
 	private T _value = defaultValue;
 
-	public event EventHandler<ValueChangedEventArgs<T>>? ValueChanged;
+	public event EventHandler<ValueChangedEventArgs>? ValueChanged;
 
 	public T Value
 	{
@@ -33,7 +33,7 @@ public class ReactiveObject<T>(T defaultValue)
 
 			if (!oldIsInitialized || oldValue == null || !oldValue.Equals(_value))
 			{
-				ValueChanged?.Invoke(this, new ValueChangedEventArgs<T>(oldValue, value));
+				ValueChanged?.Invoke(this, new ValueChangedEventArgs(oldValue, value));
 			}
 		}
 	}
@@ -42,10 +42,12 @@ public class ReactiveObject<T>(T defaultValue)
 	{
 		return obj.Value;
 	}
+
+	public class ValueChangedEventArgs(T oldValue, T newValue)
+	{
+		public T OldValue { get; } = oldValue;
+		public T NewValue { get; } = newValue;
+	}
 }
 
-public class ValueChangedEventArgs<T>(T oldValue, T newValue)
-{
-	public T OldValue { get; } = oldValue;
-	public T NewValue { get; } = newValue;
-}
+

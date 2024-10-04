@@ -38,4 +38,12 @@
     <ProjectReference Include="..\OpenShock.VoiceRecognizer.Integrations\OpenShock.VoiceRecognizer.Integrations.csproj" />
     <ProjectReference Include="..\OpenShock.VoiceRecognizer.STT\OpenShock.VoiceRecognizer.STT.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Proxies\browserproxy.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Proxies\browserproxy.html" />
+  </ItemGroup>
 </Project>

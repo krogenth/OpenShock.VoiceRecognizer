@@ -1,4 +1,4 @@
-<UserControl x:Class="OpenShock.VoiceRecognizer.UI.Views.Settings.SettingsGeneralView"
+<UserControl x:Class="OpenShock.VoiceRecognizer.UI.Views.Settings.SettingsBrowserProxyView"
 			 xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,8 +8,8 @@
              xmlns:views="using:OpenShock.VoiceRecognizer.UI.Views"
 			 xmlns:enumViews="using:OpenShock.VoiceRecognizer.UI.Views.Enums"
 			 xmlns:numberViews="using:OpenShock.VoiceRecognizer.UI.Views.Numbers"
-             x:DataType="vm:SettingsGeneralViewModel">
-	<ScrollViewer Name="GeneralPage"
+             x:DataType="vm:SettingsBrowserProxyViewModel">
+	<ScrollViewer Name="BrowserProxyPage"
 					HorizontalAlignment="Stretch"
 					VerticalAlignment="Stretch"
 					HorizontalScrollBarVisibility="Disabled"
@@ -18,10 +18,9 @@
 					HorizontalAlignment="Stretch"
 					Orientation="Vertical"
 					Spacing="10">
-			<enumViews:RecognizerTypeSelectorView DataContext="{Binding RecognizerTypeSelectorVM}" />
-			<views:AudioDeviceSelectorView DataContext="{Binding InputDeviceSelectorVM}"/>
-			<numberViews:IntInputView DataContext="{Binding ListenPortSelectorVM}" />
-			<enumViews:ShockCollarTypeSelectorView DataContext="{Binding ShockCollarTypeSelectorVM}" />
+
+			<numberViews:IntInputView DataContext="{Binding ProxyPortVM}" />
+			<enumViews:BrowserProxyTypeSelectorView DataContext="{Binding BrowserProxyVM}" />
 		</StackPanel>
 	</ScrollViewer>
 </UserControl>

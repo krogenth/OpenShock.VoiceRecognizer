@@ -6,24 +6,24 @@ namespace OpenShock.VoiceRecognizer.Configuration;
 
 public class BrowserProxyConfigurationState
 {
-	public ReactiveObject<BrowserProxyType> Proxy { get; set; }
+	public ReactiveObject<BrowserProxyType> BrowserProxy { get; set; }
 	public ReactiveObject<int> ProxyPort { get; set; }
 
 	public BrowserProxyConfigurationState()
 	{
-		Proxy = new(BrowserProxyType.Chrome);
+		BrowserProxy = new(BrowserProxyType.Chrome);
 		ProxyPort = new(0);
 	}
 
 	public void LoadFileConfiguration(ConfigurationFileFormat configurationFileFormat)
 	{
-		Proxy.Value = configurationFileFormat.BrowserProxyType;
+		BrowserProxy.Value = configurationFileFormat.BrowserProxyType;
 		ProxyPort.Value = configurationFileFormat.BrowserProxyPort;
 	}
 
 	public void LoadDefaultConfiguration()
 	{
-		Proxy.Value = BrowserProxyType.Chrome;
+		BrowserProxy.Value = BrowserProxyType.Chrome;
 		ProxyPort.Value = 0;
 	}
 }

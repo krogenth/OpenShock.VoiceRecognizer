@@ -30,5 +30,6 @@
 		<PackageVersion Include="Serilog.Sinks.File" Version="6.0.0" />
 		<PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
 		<PackageVersion Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageVersion Include="CommunityToolkit.Diagnostics" Version="8.2.1" />
   </ItemGroup>
 </Project>

@@ -32,6 +32,7 @@
 			  IsVisible="False">
 			<views:SettingsGeneralView DataContext="{Binding GeneralVM}" Name="GeneralPage" />
 			<views:SettingsVoskModelView DataContext="{Binding VoskVM}" Name="VoskPage" />
+			<views:SettingsBrowserProxyView DataContext="{Binding BrowserProxyVM}" Name="BrowserProxyPage" />
 			<views:SettingsZapView DataContext="{Binding ZapVM}" Name="ZapPage" />
 			<views:SettingsOpenShockView DataContext="{Binding OpenShockVM}" Name="OpenShockPage" />
 		</Grid>
@@ -51,6 +52,9 @@
 									   IconSource="Settings" />
 				<ui:NavigationViewItem Content="Vosk"
 									   Tag="VoskPage"
+									   IconSource="Audio" />
+				<ui:NavigationViewItem Content="Browser Proxy"
+									   Tag="BrowserProxyPage"
 									   IconSource="Audio" />
 				<ui:NavigationViewItem Content="Zap"
 									   Tag="ZapPage"

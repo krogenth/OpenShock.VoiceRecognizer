@@ -8,6 +8,6 @@ public enum BrowserProxyType
 {
 	Chrome,
 	Edge,
-	Opera,
-	Firefox,
+	//Opera,
+	//Firefox,
 };
