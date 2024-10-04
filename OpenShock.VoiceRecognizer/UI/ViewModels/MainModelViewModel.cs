@@ -110,21 +110,21 @@ public class MainModelViewModel : BaseViewModel
 			return;
 		}
 
-		if (BaseSpeechRecognizer!.Paused)
+		if (BaseSpeechRecognizer!.CanStart)
 		{
 			BaseSpeechRecognizer!.Start();
 		}
 		else
 		{
-			BaseSpeechRecognizer!.Pause();
+			BaseSpeechRecognizer!.Stop();
 		}
 	}
 
 	private void OnOSCRecognizerSet(object? sender, RecognizerSetEventArgs e)
 	{
-		if (e.State == false && CanPauseRecognizer)
+		if (e.State == false && CanStopRecognizer)
 		{
-			BaseSpeechRecognizer!.Pause();
+			BaseSpeechRecognizer!.Stop();
 		}
 		else if (e.State == true && CanStartRecognizer)
 		{
