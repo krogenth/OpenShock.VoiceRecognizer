@@ -1,8 +1,6 @@
 ﻿using OpenShock.VoiceRecognizer.Configuration;
 using OpenShock.VoiceRecognizer.Common;
-using OpenShock.VoiceRecognizer.Integrations.OSC;
 using OpenShock.VoiceRecognizer.Shockers;
-using OpenShock.VoiceRecognizer.NGramRecognizer;
 
 namespace OpenShock.VoiceRecognizer.STT;
 
@@ -12,6 +10,8 @@ public abstract class BaseRecognizer : IDisposable
 	public event EventHandler<EventArgs>? StateChanged;
 	public event EventHandler<RecognizedSpeechEventArgs>? RecognizedSpeech;
 	public event EventHandler<WasRecognizedEventArgs>? NGramRecognized;
+
+	public double MSTimestampSinceLastTrigger { get; private set; } = 0.0d;
 
 	protected OpenShockShocker _shocker;
 
@@ -32,7 +32,7 @@ public abstract class BaseRecognizer : IDisposable
 		_shocker = new OpenShockShocker();
 		Paused = false;
 		Stopped = true;
-		ConfigurationState.Instance!.Audio.InputDeviceID.ValueChanged += DeviceChanged;
+		ConfigurationState.Instance!.General.InputDeviceID.ValueChanged += DeviceChanged;
 	}
 
 	/// <summary>
@@ -72,16 +72,15 @@ public abstract class BaseRecognizer : IDisposable
 
 		if (recognized is not null)
 		{
-			_shocker.HandleRecognizedWord(recognized);
-			/*switch (recognized.Type)
+			// check if the current time has not surpassed the cooldown time for the given recognition
+			var currentTime = TimeSpan.FromTicks(DateTime.UtcNow.Ticks).TotalMilliseconds;
+			if (currentTime <= MSTimestampSinceLastTrigger + recognized.Cooldown)
 			{
-				case Utility.Common.ShockType.Vibrate:
-					break;
-				case Utility.Common.ShockType.Shock:
-					break;
-				case Utility.Common.ShockType.VibrateThenShock:
-					break;
-			}*/
+				return;
+			}
+
+			MSTimestampSinceLastTrigger = currentTime;
+			_shocker.HandleRecognizedWord(recognized);
 		}
 	}
 
@@ -100,7 +99,7 @@ public abstract class BaseRecognizer : IDisposable
 	/// </summary>
 	/// <param name="_"></param>
 	/// <param name="e"></param>
-	protected void DeviceChanged(object? _, ValueChangedEventArgs<string> e) =>
+	protected void DeviceChanged(object? _, ReactiveObject<string>.ValueChangedEventArgs e) =>
 		Stop();
 
 	public abstract void Dispose();

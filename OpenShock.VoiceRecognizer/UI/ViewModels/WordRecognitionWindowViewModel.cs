@@ -21,6 +21,7 @@ public class WordRecognitionWindowViewModel : BaseViewModel
 	public ByteInputViewModel MaxIntensityInputVM { get; set; }
 	public UShortInputViewModel MinDurationInputVM { get; set; }
 	public UShortInputViewModel MaxDurationInputVM { get; set; }
+	public DoubleInputViewModel CooldownInputVM { get; set; }
 
 	public string InputText { get; set; } = string.Empty;
 	public ShockType ShockType { get; set; } = ShockType.Vibrate;
@@ -32,6 +33,7 @@ public class WordRecognitionWindowViewModel : BaseViewModel
 	public byte MaxIntensity { get; set; } = 0;
 	public ushort MinDuration { get; set; } = 0;
 	public ushort MaxDuration { get; set; } = 0;
+	public double Cooldown { get; set; } = 0.0d;
 
 	public WordRecognitionWindowViewModel()
 	{
@@ -39,12 +41,13 @@ public class WordRecognitionWindowViewModel : BaseViewModel
 		ShockTypeSelectorVM = new("Shock Type", ShockType);
 		MinInitialDelayInputVM = new("Minimum Initial Delay (seconds)", MinInitialDelay);
 		MaxInitialDelayInputVM = new("Maximum Initial Delay (seconds)", MaxInitialDelay);
-		MinDelayInputVM = new("Minimum Delay (seconds)", MinDelay);
-		MaxDelayInputVM = new("Maximum Delay (seconds)", MaxDelay);
-		MinIntensityInputVM = new("Intensity (%)", MinIntensity, 0, 100);
-		MaxIntensityInputVM = new("Intensity (%)", MaxIntensity, 0, 100);
+		MinDelayInputVM = new("Minimum Delay Between (seconds)", MinDelay);
+		MaxDelayInputVM = new("Maximum Delay Between (seconds)", MaxDelay);
+		MinIntensityInputVM = new("Minimum Intensity (%)", MinIntensity, 0, 100);
+		MaxIntensityInputVM = new("Maximum Intensity (%)", MaxIntensity, 0, 100);
 		MinDurationInputVM = new("Minimum Duration (ms)", MinDuration);
 		MaxDurationInputVM = new("Maximum Duration (ms)", MaxDuration);
+		CooldownInputVM = new("Cooldown (ms)", Cooldown, 0, double.MaxValue, 1);
 
 		AttachHandlers();
 	}
@@ -61,6 +64,7 @@ public class WordRecognitionWindowViewModel : BaseViewModel
 		MaxIntensity = wordRecognition.MaxIntensity;
 		MinDuration = wordRecognition.MinDuration;
 		MaxDuration = wordRecognition.MaxDuration;
+		Cooldown = wordRecognition.Cooldown;
 
 		TextInputVM = new("Text", InputText);
 		ShockTypeSelectorVM = new("Shock Type", ShockType);
@@ -72,6 +76,7 @@ public class WordRecognitionWindowViewModel : BaseViewModel
 		MaxIntensityInputVM = new("Intensity (%)", MaxIntensity, 0, 100);
 		MinDurationInputVM = new("Minimum Duration (ms)", MinDuration);
 		MaxDurationInputVM = new("Maximum Duration (ms)", MaxDuration);
+		CooldownInputVM = new("Cooldown (ms)", Cooldown, 0, double.MaxValue, 1);
 
 		AttachHandlers();
 	}
@@ -88,6 +93,7 @@ public class WordRecognitionWindowViewModel : BaseViewModel
 		MaxIntensityInputVM.ValueChanged += OnMaxIntensityInputChanged;
 		MinDurationInputVM.ValueChanged += OnMinDurationInputChanged;
 		MaxDurationInputVM.ValueChanged += OnMaxDurationInputChanged;
+		CooldownInputVM.ValueChanged += OnCooldownInputChanged;
 	}
 
 	private void OnTextInputChanged(object? sender, EventArgs e) =>
@@ -110,6 +116,8 @@ public class WordRecognitionWindowViewModel : BaseViewModel
 		MinDuration = MinDurationInputVM.Value;
 	private void OnMaxDurationInputChanged(object? sender, BaseNumberInputViewModel<ushort>.NumberChangedEventArgs e) =>
 		MaxDuration = MaxDurationInputVM.Value;
+	private void OnCooldownInputChanged(object? sender, BaseNumberInputViewModel<double>.NumberChangedEventArgs e) =>
+		Cooldown = CooldownInputVM.Value;
 
 	public void Save()
 	{

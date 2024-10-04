@@ -69,6 +69,7 @@
 				<DataGridTextColumn Header="Delay (sec)" Binding="{Binding DelayRange}" />
 				<DataGridTextColumn Header="Intensity (%)" Binding="{Binding IntensityRange}" />
 				<DataGridTextColumn Header="Duration (ms)" Binding="{Binding DurationRange}" />
+				<DataGridTextColumn Header="Cooldown (ms)" Binding="{Binding CooldownStr}" />
 				<DataGridCheckBoxColumn Header="Active?" Binding="{Binding Active}" />
 			</DataGrid.Columns>
 		</DataGrid>

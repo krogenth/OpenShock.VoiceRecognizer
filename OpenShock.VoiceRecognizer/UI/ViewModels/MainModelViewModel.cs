@@ -1,5 +1,9 @@
-﻿using OpenShock.VoiceRecognizer.Integrations.OSC;
+﻿using OpenShock.VoiceRecognizer.Common;
+using OpenShock.VoiceRecognizer.Common.Enums;
+using OpenShock.VoiceRecognizer.Configuration;
+using OpenShock.VoiceRecognizer.Integrations.OSC;
 using OpenShock.VoiceRecognizer.STT;
+using OpenShock.VoiceRecognizer.STT.BrowserProxy;
 using System;
 
 namespace OpenShock.VoiceRecognizer.UI.ViewModels;
@@ -10,7 +14,7 @@ public class MainModelViewModel : BaseViewModel
 	private string _recognizedText = string.Empty;
 	private bool _wasRecognized = false;
 
-	public BaseRecognizer? BaseSpeechRecognizer { get; set; }
+	public BaseRecognizer? BaseSpeechRecognizer { get; private set; }
 
 	public string RecognizedText
 	{
@@ -39,14 +43,58 @@ public class MainModelViewModel : BaseViewModel
 		_oscServer.SetRecognizer += OnOSCRecognizerSet;
 
 		SelectRecognizer();
+		ConfigurationState.Instance!.General.Recognizer.ValueChanged += OnRecognizerChanged;
+		ConfigurationState.Instance!.BrowserProxy.BrowserProxy.ValueChanged += OnBrowserProxyChanged;
 	}
 
 	private void SelectRecognizer()
 	{
-		BaseSpeechRecognizer = new VoskSpeechRecognizer();
-		BaseSpeechRecognizer.RecognizedSpeech += OnRecognizedSpeech;
-		BaseSpeechRecognizer.NGramRecognized += WasRecognizedSpeech;
-		BaseSpeechRecognizer.StateChanged += OnRecognizerStateChanged;
+		if (BaseSpeechRecognizer is not null)
+		{
+			if (BaseSpeechRecognizer.CanStop)
+			{
+				BaseSpeechRecognizer.Stop();
+			}
+
+			BaseSpeechRecognizer = null;
+		}
+
+		switch (ConfigurationState.Instance!.General.Recognizer.Value)
+		{
+		case RecognizerType.Vosk:
+			BaseSpeechRecognizer = new VoskSpeechRecognizer();
+			break;
+		case RecognizerType.BrowserProxy:
+			switch (ConfigurationState.Instance!.BrowserProxy.BrowserProxy.Value)
+			{
+			case BrowserProxyType.Chrome:
+				BaseSpeechRecognizer = new ChromeBrowserProxyRecognizer();
+				break;
+			case BrowserProxyType.Edge:
+				BaseSpeechRecognizer = new EdgeBrowserProxyRecognizer();
+				break;
+			}
+
+			break;
+		}
+
+		if (BaseSpeechRecognizer is not null)
+		{
+			BaseSpeechRecognizer.RecognizedSpeech += OnRecognizedSpeech;
+			BaseSpeechRecognizer.NGramRecognized += WasRecognizedSpeech;
+			BaseSpeechRecognizer.StateChanged += OnRecognizerStateChanged;
+		}
+	}
+
+	private void OnRecognizerChanged(object? sender, ReactiveObject<RecognizerType>.ValueChangedEventArgs _) =>
+		SelectRecognizer();
+
+	private void OnBrowserProxyChanged(object? sender, ReactiveObject<BrowserProxyType>.ValueChangedEventArgs _)
+	{
+		if (ConfigurationState.Instance!.General.Recognizer.Value is RecognizerType.BrowserProxy)
+		{
+			SelectRecognizer();
+		}
 	}
 
 	private void OnRecognizedSpeech(object? sender, RecognizedSpeechEventArgs e) =>

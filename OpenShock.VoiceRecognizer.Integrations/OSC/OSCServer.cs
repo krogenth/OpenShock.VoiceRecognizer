@@ -35,7 +35,7 @@ public class OSCServer
 		);
 	}
 
-	private void OnListenPortChanged(object? sender, ValueChangedEventArgs<int> e) =>
+	private void OnListenPortChanged(object? sender, ReactiveObject<int>.ValueChangedEventArgs e) =>
 		CreateServer();
 
 	private void OnChangeRecognizerState(OscMessageValues values) =>

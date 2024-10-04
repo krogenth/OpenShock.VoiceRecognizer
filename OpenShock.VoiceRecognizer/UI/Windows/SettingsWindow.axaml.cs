@@ -45,6 +45,7 @@ public partial class SettingsWindow : Window
 				"GeneralPage" => GeneralPage,
 				"VoskPage" => VoskPage,
 				"ZapPage" => ZapPage,
+				"BrowserProxyPage" => BrowserProxyPage,
 				"OpenShockPage" => OpenShockPage,
 				_ => throw new NotImplementedException(),
 			};

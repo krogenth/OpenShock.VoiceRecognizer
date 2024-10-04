@@ -6,6 +6,7 @@ namespace OpenShock.VoiceRecognizer.Configuration;
 
 public class ConfigurationFileFormat
 {
+	public RecognizerType RecognizerType { get; set; } = RecognizerType.Vosk;
 	public string InputDeviceID { get; set; } = string.Empty;
 	public string VoskModelDirectory { get; set; } = string.Empty;
 	public int OscListenPort { get; set; } = 0;
@@ -21,15 +22,16 @@ public class ConfigurationFileFormat
 
 	public ConfigurationFileFormat(ConfigurationState state)
 	{
-		InputDeviceID = state.Audio.InputDeviceID.Value;
+		RecognizerType = state.General.Recognizer.Value;
+		InputDeviceID = state.General.InputDeviceID.Value;
 		VoskModelDirectory = state.Vosk.ModelDirectory.Value;
 		OscListenPort = state.OSC.ListenPort.Value;
-		CollarType = state.Shock.CollarType.Value;
+		CollarType = state.General.CollarType.Value;
 		Words = state.Shock.Words.Value;
 		OpenShockAPIKey = state.OpenShock.APIKey.Value;
 		OpenShockDeviceID = state.OpenShock.DeviceID.Value;
 		OpenShockShockerID = state.OpenShock.ShockerID.Value;
-		BrowserProxyType = state.BrowserProxy.Proxy.Value;
+		BrowserProxyType = state.BrowserProxy.BrowserProxy.Value;
 		BrowserProxyPort = state.BrowserProxy.ProxyPort.Value;
 	}
 

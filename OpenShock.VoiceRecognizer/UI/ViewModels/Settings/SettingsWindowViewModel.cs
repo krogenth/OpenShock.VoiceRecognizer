@@ -10,6 +10,7 @@ public class SettingsWindowViewModel(SettingsWindow window)
 
 	public SettingsGeneralViewModel GeneralVM { get; } = new();
 	public SettingsVoskModelViewModel VoskVM { get; } = new();
+	public SettingsBrowserProxyViewModel BrowserProxyVM { get; } = new();
 	public SettingsZapViewModel ZapVM { get; } = new(window);
 	public SettingsOpenShockViewModel OpenShockVM { get; } = new();
 
@@ -18,6 +19,7 @@ public class SettingsWindowViewModel(SettingsWindow window)
 		GeneralVM.SaveToConfigurationState();
 		VoskVM.SaveToConfigurationState();
 		ZapVM.SaveToConfigurationState();
+		BrowserProxyVM.SaveToConfigurationState();
 		OpenShockVM.SaveToConfigurationState();
 		ConfigurationState.Instance!.SaveConfigurationStateToFile();
 	}
