@@ -72,8 +72,8 @@ public class WordRecognitionWindowViewModel : BaseViewModel
 		MaxInitialDelayInputVM = new("Maximum Initial Delay (seconds)", MaxInitialDelay);
 		MinDelayInputVM = new("Minimum Delay (seconds)", MinDelay);
 		MaxDelayInputVM = new("Maximum Delay (seconds)", MaxDelay);
-		MinIntensityInputVM = new("Intensity (%)", MinIntensity, 0, 100);
-		MaxIntensityInputVM = new("Intensity (%)", MaxIntensity, 0, 100);
+		MinIntensityInputVM = new("Minimum Intensity (%)", MinIntensity, 0, 100);
+		MaxIntensityInputVM = new("Maximum Intensity (%)", MaxIntensity, 0, 100);
 		MinDurationInputVM = new("Minimum Duration (ms)", MinDuration);
 		MaxDurationInputVM = new("Maximum Duration (ms)", MaxDuration);
 		CooldownInputVM = new("Cooldown (ms)", Cooldown, 0, double.MaxValue, 1);
